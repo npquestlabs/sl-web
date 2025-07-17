@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
 import { ApiResponse, httpService } from "@/api/httpService";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAuthStore } from "@/store/auth";
 
 const iconMap = {
   lease_signed: FileText,
@@ -16,10 +17,11 @@ const iconMap = {
 };
 
 export default function Dashboard() {
-  const { data: stats, isLoading: statsLoading, error } = useQuery<SummaryStats | null>({
+  const { data: stats } = useQuery<SummaryStats | null>({
     queryKey: ["dashboardStats"],
     queryFn: async () => {
-      const result = await dummyApi.getDashboardStats();
+      const result = await httpService.get<ApiResponse<SummaryStats>>("/landlords/summary");
+      // const result = await dummyApi.getDashboardStats();
       if (result.error) {
         throw new Error(result.error);
       }
@@ -28,18 +30,14 @@ export default function Dashboard() {
     },
     initialData: null,
   });
+  const { user } = useAuthStore();
   const [activity, setActivity] = useState<ActivityItem[]>([]);
-  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const [activityData, userData] = await Promise.all([
-          dummyApi.getRecentActivity(),
-          dummyApi.getCurrentUser(),
-        ]);
+        const activityData = await dummyApi.getRecentActivity();
         setActivity(activityData);
-        setUser(new User(userData));
       } catch (error) {
         console.error("Failed to fetch dashboard data:", error);
       }
@@ -47,8 +45,6 @@ export default function Dashboard() {
 
     fetchDashboardData();
   }, []);
-
-
 
   const statsData = stats ? [
     { title: "Total Complexes", value: stats.complexes, icon: Building2 },
@@ -69,7 +65,7 @@ export default function Dashboard() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
         {
           statsData ? statsData.map(stat => {
             return <Card key={stat.title}>
@@ -83,7 +79,7 @@ export default function Dashboard() {
                 <div className="text-2xl font-bold">{stat.value}</div>
               </CardContent>
             </Card>
-          }) : [0, 1, 2, 3, 4].map((_, index) => <Skeleton key={index} className="h-36 w-32" />)
+          }) : [0, 1, 2, 3, 4].map((_, index) => <Skeleton key={index} className="h-36 w-full" />)
         }
       </div>
 

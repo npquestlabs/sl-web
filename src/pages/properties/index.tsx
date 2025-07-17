@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Search, Plus } from "lucide-react";
 import { Complex } from "@/types";
 import { dummyApi } from "@/api/dummy";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default function Properties() {
   const [complexes, setComplexes] = useState<Complex[]>([]);
@@ -74,65 +75,47 @@ export default function Properties() {
           <CardTitle>Properties</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b text-left">
-                  <th className="pb-3 font-medium text-muted-foreground">
-                    Name
-                  </th>
-                  <th className="pb-3 font-medium text-muted-foreground">
-                    Address
-                  </th>
-                  <th className="pb-3 font-medium text-muted-foreground">
-                    Units
-                  </th>
-                  <th className="pb-3 font-medium text-muted-foreground">
-                    Occupancy
-                  </th>
-                  <th className="pb-3 font-medium text-muted-foreground">
-                    Status
-                  </th>
-                  {/* Removed Actions column for premium row-click UX */}
-                </tr>
-              </thead>
-              <tbody>
-                {filteredComplexes.map((complex, index) => {
-                  const occupancyRate = complex.totalUnits
-                    ? Math.round(
-                        (complex.occupiedUnits! / complex.totalUnits) * 100,
-                      )
-                    : 0;
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Address</TableHead>
+                <TableHead>Units</TableHead>
+                <TableHead>Occupancy</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredComplexes.map((complex, index) => {
+                const occupancyRate = complex.totalUnits
+                  ? Math.round(
+                    (complex.occupiedUnits! / complex.totalUnits) * 100,
+                  )
+                  : 0;
 
-                  return (
-                    <tr
-                      key={complex.id}
-                      className="border-b text-left hover:bg-muted/40 cursor-pointer transition"
-                      onClick={() => navigate(`./${complex.id}`)}
-                    >
-                      <td className="pb-3 font-medium text-muted-foreground">
-                        {complex.name}
-                      </td>
-                      <td className="pb-3 font-medium text-muted-foreground">
-                        {complex.address}
-                      </td>
-                      <td className="pb-3 font-medium text-muted-foreground">
-                        {complex.totalUnits}
-                      </td>
-                      <td className="pb-3 font-medium text-muted-foreground">
-                        {occupancyRate}%
-                      </td>
-                      <td className="pb-3 font-medium text-muted-foreground">
-                        {complex.occupiedUnits < complex.totalUnits
-                          ? "Available"
-                          : "Full"}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                return (
+                  <TableRow
+                    key={complex.id}
+                    className="border-b text-left hover:bg-muted/40 cursor-pointer transition"
+                    onClick={() => navigate(`./${complex.id}`)}
+                  >
+                    <TableCell className="pb-3 font-medium text-muted-foreground">
+                      {complex.name}
+                    </TableCell>
+                    <TableCell className="pb-3 font-medium text-muted-foreground">
+                      {complex.address}
+                    </TableCell>
+                    <TableCell className="pb-3 font-medium text-muted-foreground">
+                      {complex.totalUnits}
+                    </TableCell>
+                    <TableCell className="pb-3 font-medium text-muted-foreground">
+                      {occupancyRate}%
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+
+            </TableBody>
+          </Table>
         </CardContent>
       </Card>
     </div>
