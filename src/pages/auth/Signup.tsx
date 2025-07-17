@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import AuthLayout from "@/components/layout/Auth";
 import { toast } from "sonner";
-import { Loader } from "lucide-react";
+import { Eye, EyeOff, Loader, Lock, Mail, UserCircle, UserCircle2, UserIcon } from "lucide-react";
 import { httpService } from "@/api/httpService";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { useAuthStore } from "@/store/auth";
@@ -18,6 +18,7 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const [stage, setStage] = useState<"form" | "otp">("form");
   const [otp, setOtp] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const setUser = useAuthStore(state => state.setUser);
 
@@ -26,12 +27,12 @@ export default function Signup() {
     setLoading(true);
     try {
       const user = {
-      firstName,
-      lastName,
-      email,
-      password,
-      landlord: {},
-    };
+        firstName,
+        lastName,
+        email,
+        password,
+        landlord: {},
+      };
       const result = await httpService.registerStageOne({ email, user });
       if (result.error) {
         throw new Error(result.error);
@@ -74,33 +75,69 @@ export default function Signup() {
       {stage === "form" ? (
         <form onSubmit={handleSignup} className="flex flex-col gap-4">
           <h2 className="font-bold text-2xl mb-2 text-center">Sign Up</h2>
-          <Input
-            type="text"
-            placeholder="First Name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-          <Input
-            type="text"
-            placeholder="Last Name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-          <Input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <Input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+              <UserIcon className="h-4 w-4" />
+            </span>
+            <Input
+              type="text"
+              placeholder="First Name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+              className="pl-10"
+            />
+          </div>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+              <UserIcon className="h-4 w-4" />
+            </span>
+            <Input
+              type="text"
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+              <Mail className="h-4 w-4" />
+            </span>
+            <Input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="pl-10"
+            />
+          </div>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+              <Lock className="h-4 w-4" />
+            </span>
+            <Input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="pl-10 pr-10"
+            />
+            <button
+              type="button"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+              onClick={() => setShowPassword((v) => !v)}
+              tabIndex={-1}
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+            </button>
+          </div>
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? <Loader className="h-4 w-4 animate-spin" /> : "Sign Up"}
           </Button>

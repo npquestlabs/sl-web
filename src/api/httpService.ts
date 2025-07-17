@@ -41,7 +41,7 @@ class HttpService {
     // Request interceptor to add auth token
     this.api.interceptors.request.use(
       (config) => {
-        const token = localStorage.getItem("auth_token");
+        const token = localStorage.getItem(ACCESS_TOKEN_KEY);
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
@@ -159,11 +159,11 @@ class HttpService {
   }
 
   async resendVerificationCode(data: RegisterStageOneRequest) {
-    return this.post<ApiResponse<null>>("/auth/register/resend-verification", data);
+    return this.post<ApiResponse<MessageResponse>>("/auth/register/resend-verification", data);
   }
 
   async forgotPassword(email: string) {
-    return this.post<ApiResponse<null>>("/auth/forgot-password", { email });
+    return this.post<ApiResponse<MessageResponse>>("/auth/forgot-password", { email });
   }
 
   async getCurrentUser() {

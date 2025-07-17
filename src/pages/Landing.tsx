@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/auth";
 import { Button } from "@/components/ui/button";
@@ -12,11 +13,10 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
 
 export default function Landing() {
   const navigate = useNavigate();
-  const { user, reload } = useAuthStore();
+  const { user } = useAuthStore();
   const [scrolled, setScrolled] = useState(false);
 
   // Fix animation scroll bug: always scroll to top on mount
@@ -32,12 +32,6 @@ export default function Landing() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => {
-    if (!user) {
-      reload();
-    }
-  }, [reload, user]);
 
   return (
     <div

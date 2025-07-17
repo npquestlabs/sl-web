@@ -10,7 +10,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
     <div className="flex min-h-screen items-center justify-center bg-background flex-col">
       {/* Organization Info/Logo */}
       <div
-        className="mb-8 flex flex-col items-center cursor-pointer select-none"
+        className="mt-6 mb-8 flex flex-col items-center cursor-pointer select-none"
         onClick={() => navigate("/")}
       >
         <div className="h-14 w-14 bg-primary rounded-full flex items-center justify-center shadow-lg">

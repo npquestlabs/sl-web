@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { User } from "@/types";
 import { httpService } from "@/api/httpService";
+import { dummyApi } from "@/api/dummy";
 
 class AuthState {
   user: User | null;
@@ -34,7 +35,7 @@ class AuthState {
         }
       } catch (error) {
         if (options?.handleError) {
-          options.handleError(error);
+          options.handleError(error instanceof Error ? error : new Error("Unknown error"));
         }
       }
 
@@ -45,6 +46,8 @@ class AuthState {
       httpService.clearTokens();
       setUser(null);
     };
+
+    this.reload()
   }
 
   get isAuthenticated(): boolean {

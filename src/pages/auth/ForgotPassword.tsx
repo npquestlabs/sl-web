@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import AuthLayout from "@/components/layout/Auth";
 import { toast } from "sonner";
+import { Mail } from "lucide-react";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -27,17 +28,23 @@ export default function ForgotPassword() {
     <AuthLayout>
       <form onSubmit={handleForgot} className="flex flex-col gap-4">
         <h2 className="font-bold text-2xl mb-2 text-center">Forgot Password</h2>
-        <Input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+            <Mail className="h-4 w-4" />
+          </span>
+          <Input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="pl-10"
+          />
+        </div>
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? "Sending..." : "Send Reset Link"}
         </Button>
-        <div className="flex justify-center text-sm mt-2 gap-2">
+        <div className="flex justify-center text-sm mt-2 gap-2 items-center">
           <span className="text-muted-foreground">Remembered?</span>
           <Button
             variant="link"

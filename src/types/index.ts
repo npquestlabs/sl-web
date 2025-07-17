@@ -120,14 +120,6 @@ export type MaintenanceRequest = {
   complex?: Complex;
 };
 
-export type DashboardStats = {
-  totalComplexes: number;
-  totalUnits: number;
-  activeLeases: number;
-  upcomingPayments: number;
-  pendingMaintenanceRequests: number;
-};
-
 export type ActivityItem = {
   id: string;
   type:
@@ -206,4 +198,12 @@ export type RegisterStageTwoRequest = {
 
 export type MessageResponse = {
   message: string;
+}
+
+export type SummaryStats = {
+  complexes: number;
+  units: number;
+  tenants: number;
+  payments: number;
+  maintenanceRequests: number;
 }

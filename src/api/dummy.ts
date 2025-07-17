@@ -4,7 +4,7 @@ import {
   Lease,
   Payment,
   MaintenanceRequest,
-  DashboardStats,
+  SummaryStats,
   ActivityItem,
   UserPOJO,
   Tenant,
@@ -258,12 +258,12 @@ export const dummyLeases: Lease[] = [
   },
 ];
 
-export const dummyStats: DashboardStats = {
-  totalComplexes: 5,
-  totalUnits: 20,
-  activeLeases: 15,
-  upcomingPayments: 3,
-  pendingMaintenanceRequests: 2,
+export const dummyStats: SummaryStats = {
+  complexes: 5,
+  units: 20,
+  tenants: 15,
+  payments: 3,
+  maintenanceRequests: 2,
 };
 
 export const dummyActivity: ActivityItem[] = [
@@ -333,8 +333,8 @@ export const dummyApi = {
   },
 
   // Dashboard
-  async getDashboardStats(): Promise<DashboardStats> {
-    await new Promise((resolve) => setTimeout(resolve, 500));
+  async getDashboardStats(): Promise<ApiResponse<SummaryStats>> {
+    await new Promise((resolve) => setTimeout(resolve, 4500));
     return dummyStats;
   },
 

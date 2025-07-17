@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Building2, Home, FileText, DollarSign, Wrench } from "lucide-react";
-import { DashboardStats, ActivityItem, User } from "@/types";
+import { ActivityItem, SummaryStats, User } from "@/types";
 import { dummyApi } from "@/api/dummy";
 import { format } from "date-fns";
+import { useQuery } from "@tanstack/react-query";
+import { ApiResponse, httpService } from "@/api/httpService";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const iconMap = {
   lease_signed: FileText,
@@ -13,40 +16,47 @@ const iconMap = {
 };
 
 export default function Dashboard() {
-  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const { data: stats, isLoading: statsLoading, error } = useQuery<SummaryStats | null>({
+    queryKey: ["dashboardStats"],
+    queryFn: async () => {
+      const result = await dummyApi.getDashboardStats();
+      if (result.error) {
+        throw new Error(result.error);
+      }
+      console.log("summary data received", result);
+      return result
+    },
+    initialData: null,
+  });
   const [activity, setActivity] = useState<ActivityItem[]>([]);
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const [statsData, activityData, userData] = await Promise.all([
-          dummyApi.getDashboardStats(),
+        const [activityData, userData] = await Promise.all([
           dummyApi.getRecentActivity(),
           dummyApi.getCurrentUser(),
         ]);
-
-        setStats(statsData);
         setActivity(activityData);
         setUser(new User(userData));
       } catch (error) {
         console.error("Failed to fetch dashboard data:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchDashboardData();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-96">
-        <div className="text-muted-foreground">Loading dashboard...</div>
-      </div>
-    );
-  }
+
+
+  const statsData = stats ? [
+    { title: "Total Complexes", value: stats.complexes, icon: Building2 },
+    { title: "Total Units", value: stats.units, icon: Home },
+    { title: "Active Leases", value: stats.tenants, icon: FileText },
+    { title: "Upcoming Payments", value: stats.payments, icon: DollarSign },
+    { title: "Pending Maintenance Requests", value: stats.maintenanceRequests, icon: Wrench },
+  ] : null;
 
   return (
     <div className="space-y-8 p-6">
@@ -59,64 +69,22 @@ export default function Dashboard() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Total Complexes
-            </CardTitle>
-            <Building2 className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.totalComplexes}</div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Units</CardTitle>
-            <Home className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.totalUnits}</div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Leases</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.activeLeases}</div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Upcoming Payments
-            </CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.upcomingPayments}</div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Pending Maintenance Requests
-            </CardTitle>
-            <Wrench className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {stats?.pendingMaintenanceRequests}
-            </div>
-          </CardContent>
-        </Card>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        {
+          statsData ? statsData.map(stat => {
+            return <Card key={stat.title}>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  {stat.title}
+                </CardTitle>
+                <stat.icon className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stat.value}</div>
+              </CardContent>
+            </Card>
+          }) : [0, 1, 2, 3, 4].map((_, index) => <Skeleton key={index} className="h-36 w-32" />)
+        }
       </div>
 
       {/* Recent Activity */}
