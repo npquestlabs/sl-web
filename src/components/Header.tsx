@@ -88,7 +88,7 @@ export function Header() {
                 </span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
+              <DropdownMenuItem asChild className="cursor-pointer">
                 <Link
                   to="/dashboard/profile"
                   className="flex items-center w-full"
@@ -100,7 +100,7 @@ export function Header() {
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={logout}
-                className="text-destructive flex items-center"
+                className="text-destructive flex items-center cursor-pointer"
               >
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Logout</span>

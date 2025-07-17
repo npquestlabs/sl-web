@@ -11,7 +11,7 @@ export type UserPOJO = {
 };
 
 export class User {
-  constructor(private data: UserPOJO) {}
+  constructor(private data: UserPOJO) { }
 
   get id() {
     return this.data.id;
@@ -131,10 +131,10 @@ export type DashboardStats = {
 export type ActivityItem = {
   id: string;
   type:
-    | "lease_signed"
-    | "payment_received"
-    | "maintenance_created"
-    | "maintenance_completed";
+  | "lease_signed"
+  | "payment_received"
+  | "maintenance_created"
+  | "maintenance_completed";
   title: string;
   description: string;
   date: string;
@@ -184,3 +184,26 @@ export type CreateMaintenanceRequest = {
   description: string;
   priority?: "low" | "medium" | "high";
 };
+
+export type RegisterUserSchema = {
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  email: string;
+  password: string;
+  landlord: object;
+};
+
+export type RegisterStageOneRequest = {
+  email: string;
+  user: RegisterUserSchema;
+};
+
+export type RegisterStageTwoRequest = {
+  otp: string;
+  user: RegisterUserSchema;
+};
+
+export type MessageResponse = {
+  message: string;
+}

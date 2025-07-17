@@ -24,8 +24,8 @@ export default function Login() {
     setLoggingIn(true);
 
     try {
-      //const result = await httpService.login(email, password);
-      const result = await dummyApi.login(email, password);
+      const result = await httpService.login(email, password);
+      // const result = await dummyApi.login(email, password);
       if (result.error) {
         throw new Error(result.error);
       } else {

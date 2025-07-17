@@ -37,7 +37,7 @@ export default function Landing() {
     if (!user) {
       reload();
     }
-  }, []);
+  }, [reload, user]);
 
   return (
     <div

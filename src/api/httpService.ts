@@ -3,22 +3,31 @@ import {
   CreateLeaseRequest,
   CreateMaintenanceRequest,
   CreateUnitRequest,
-  User,
+  MessageResponse,
+  RegisterStageOneRequest,
+  RegisterStageTwoRequest,
   UserPOJO,
 } from "@/types";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { A } from "node_modules/framer-motion/dist/types.d-Bq-Qm38R";
 
 export type ApiResponse<T extends object> = T & { error?: string };
 
+const ACCESS_TOKEN_KEY =
+  import.meta.env.VITE_ACCESS_TOKEN_KEY || "access_token";
+const REFRESH_TOKEN_KEY =
+  import.meta.env.VITE_REFRESH_TOKEN_KEY || "refresh_token";
+
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api/v1";
+
 class HttpService {
   private api: AxiosInstance;
-  private baseURL = "https://api.example.com"; // Replace with actual API URL
+  private baseURL = API_BASE_URL;
 
   constructor() {
     this.api = axios.create({
       baseURL: this.baseURL,
-      timeout: 10000,
+      timeout: 20000,
       headers: {
         "Content-Type": "application/json",
         "x-client": "landlord",
@@ -46,25 +55,39 @@ class HttpService {
     // Response interceptor to handle auth errors and save tokens
     this.api.interceptors.response.use(
       (response: AxiosResponse) => {
-        // Save token if present in response
-        if (response.data?.token) {
-          localStorage.setItem("auth_token", response.data.token);
+        if (response.data?.tokens) {
+          const accessToken = response.data.tokens.access;
+          const refreshToken = response.data.tokens.refresh;
+
+          this.setTokens(accessToken, refreshToken);
         }
+
         return response;
       },
       (error) => {
         if (error.response?.status === 401) {
-          // Clear token and redirect to login
-          this.clearToken();
-          window.location.href = "/login";
+          // Remove tokens on 401
+          this.clearTokens();
+          // if (typeof window !== "undefined" && !["/login", "/"].includes(window.location.pathname)) {
+          //   window.location.href = "/login";
+          // }
+        }
+        if (error.response) {
+          return Promise.resolve(error.response);
         }
         return Promise.reject(error);
       },
     );
   }
 
-  clearToken() {
-    localStorage.removeItem("auth_token");
+  setTokens(access: string, refresh: string) {
+    localStorage.setItem(ACCESS_TOKEN_KEY, access);
+    localStorage.setItem(REFRESH_TOKEN_KEY, refresh);
+  }
+
+  public clearTokens() {
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
   }
 
   // Generic HTTP methods
@@ -125,6 +148,18 @@ class HttpService {
       email,
       password,
     });
+  }
+
+  async registerStageOne(data: RegisterStageOneRequest) {
+    return this.post<ApiResponse<MessageResponse>>("/auth/register/stage-one", data);
+  }
+
+  async registerStageTwo(data: RegisterStageTwoRequest) {
+    return this.post<ApiResponse<{ user: UserPOJO }>>("/auth/register/stage-two", data);
+  }
+
+  async resendVerificationCode(data: RegisterStageOneRequest) {
+    return this.post<ApiResponse<null>>("/auth/register/resend-verification", data);
   }
 
   async forgotPassword(email: string) {

@@ -1,9 +1,27 @@
 import { useAuthStore } from "@/store/auth";
-import { Header } from "./Header";
+import { Header } from "@/components/Header";
 import { Navigate, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-export function Layout() {
-  const { user, isLoading } = useAuthStore();
+export function DashboardLayout() {
+  const { user, reload } = useAuthStore();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user) {
+      reload({
+        handleError: (error) => {
+          setIsLoading(false);
+        },
+        handleSuccess: () => {
+          setIsLoading(false);
+        },
+      });
+    } else {
+      setIsLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (isLoading) {
     return (
