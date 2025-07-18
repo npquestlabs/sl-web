@@ -1,4 +1,4 @@
-import { Bell, User, LogOut } from "lucide-react";
+import { Bell, User, LogOut, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, useLocation } from "react-router-dom";
@@ -73,8 +73,7 @@ export function Header() {
                 <Avatar>
                   <AvatarImage src="/placeholder3.svg" />
                   <AvatarFallback>
-                    {user?.firstName.charAt(0).toUpperCase() +
-                      user?.lastName.charAt(0).toUpperCase()}
+                    {user ? user.initials : 'AN'}
                   </AvatarFallback>
                 </Avatar>
               </Button>
@@ -95,6 +94,16 @@ export function Header() {
                 >
                   <User className="mr-2 h-4 w-4 text-muted-foreground" />
                   <span>Profile</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Link
+                  to="/dashboard/settings"
+                  className="flex items-center w-full"
+                >
+                  <Settings className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <span>Settings</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />

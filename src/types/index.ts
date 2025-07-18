@@ -31,6 +31,9 @@ export class User {
   get fullName() {
     return `${this.data.firstName} ${this.data.lastName}`;
   }
+  get initials() {
+    return `${this.data.firstName.charAt(0)}${this.data.lastName.charAt(0)}`.toUpperCase();
+  }
   get createdAt() {
     return this.data.createdAt;
   }

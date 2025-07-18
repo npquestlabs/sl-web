@@ -105,8 +105,10 @@ export default function Landing() {
             </div>
             {user ? (
               <Avatar>
-                <AvatarImage src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlVs89AdXKZBVayAs7YyxkjI0KiRiEz8Mt4in9CHsU1Hp8kdbqQ7jN_GZtF6RVZqbensDfqRNTTociCEAHAZPqnChj0-C95s8dP2gsPgid_HRnGvgyWuIXZ1e-6esf_RLxZe-kb1LS-ZQxdj2UK9inS8hsdCF_oqJh0OJxiZBx8ariyes5dJPGPozM94LaLNAuQvJPaqS_N_VhApKgYmKkCd0iTeslMH5bEkh1-SR2WW6DPBSYy1pmTtNYyGm4HmOtZRNPkCdeQUri" />
-                <AvatarFallback>PP</AvatarFallback>
+                <AvatarImage src="/placeholder3.svg" />
+                <AvatarFallback>
+                  {user.initials}
+                </AvatarFallback>
               </Avatar>
             ) : (
               <Button
