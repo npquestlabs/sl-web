@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Apple, Facebook } from "lucide-react";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
@@ -71,7 +70,12 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                 className="flex items-center gap-2"
                 onClick={() => alert("Apple login coming soon!")}
               >
-                <Apple className="h-5 w-5" /> Apple
+                <img
+                  src="https://www.svgrepo.com/show/503173/apple-logo.svg"
+                  alt="Apple"
+                  className="h-5 w-5"
+                />{" "}
+                Apple
               </Button>
               <Button
                 variant="outline"
@@ -79,7 +83,12 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                 className="flex items-center gap-2"
                 onClick={() => alert("Facebook login coming soon!")}
               >
-                <Facebook className="h-5 w-5 text-[#1877f3]" /> Facebook
+                <img
+                  src="https://www.svgrepo.com/show/303117/facebook-2-logo.svg"
+                  alt="Facebook"
+                  className="h-5 w-5"
+                />{" "}
+                 Facebook
               </Button>
             </div>
           </div>
