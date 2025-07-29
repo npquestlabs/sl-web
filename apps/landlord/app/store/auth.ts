@@ -22,7 +22,7 @@ class AuthState {
       setIsLoading(true);
 
       try {
-        const result = await httpService.get<LandlordUser>("/landlords/user");
+        const result = await httpService.get<LandlordUser>("/landlords/me");
         // const result = await dummyApi.getCurrentUser();
         if (result.error) {
           throw new Error(result.error);
