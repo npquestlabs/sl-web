@@ -1,0 +1,39 @@
+{
+  "extends": "@repo/typescript-config/react.json",
+  "compilerOptions": {
+    "types": [
+      "react",
+      "vite/client",
+      "vite/types/importMeta.d.ts",
+      "vitest/config",
+      "vitest/globals",
+      "vitest/jsdom",
+      "@testing-library/jest-dom"
+    ],
+    "rootDirs": [
+      ".",
+      "./.react-router/types"
+    ],
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./app/*"
+      ]
+    }
+  },
+  "include": [
+    "vite.config.ts",
+    "app",
+    "eslintrc.config.js",
+    ".react-router/types/**/*",
+    "server",
+    "react-router.config.ts",
+    "tailwind.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".react-router",
+    "public"
+  ]
+}
