@@ -69,7 +69,9 @@ export function Header() {
               a: { textDecoration: 'none', color: 'inherit' },
             }}
           >
-            <NavLink to="/"><Home /></NavLink>
+            <NavLink to="/">
+              <Home />
+            </NavLink>
           </Typography>
           <Stack
             direction="row"

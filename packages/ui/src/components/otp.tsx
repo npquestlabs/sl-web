@@ -77,13 +77,7 @@ type OTPProps = {
   className?: string;
 };
 
-export function OTP({
-  length,
-  pattern,
-  value,
-  onChange,
-  className,
-}: OTPProps) {
+export function OTP({ length, pattern, value, onChange, className }: OTPProps) {
   return (
     <StyledOTPInput
       maxLength={length}
@@ -92,7 +86,14 @@ export function OTP({
       onChange={onChange}
       containerClassName={className}
     >
-      <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', width: '100%' }}>
+      <div
+        style={{
+          display: 'flex',
+          gap: '0.5rem',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
         {Array.from({ length }).map((_, index) => (
           <InputOTPSlot key={index} index={index} />
         ))}

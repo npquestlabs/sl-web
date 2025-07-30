@@ -15,7 +15,9 @@ export default function DashboardLayout() {
   useEffect(() => {
     reload({
       handleError: (error) => {
-        toast.error(error instanceof Error ? error.message : 'Failed to load user data')
+        toast.error(
+          error instanceof Error ? error.message : 'Failed to load user data',
+        );
         setIsLoading(false);
       },
       handleSuccess: () => {

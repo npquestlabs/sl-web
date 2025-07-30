@@ -62,7 +62,7 @@ interface SidebarProps {
 
 export function Sidebar({ drawerWidth, isCollapsed }: SidebarProps) {
   const theme = useTheme();
-  
+
   const drawerContent = (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       {/* === Header of Sidebar === */}

@@ -10,16 +10,11 @@
       "vitest/jsdom",
       "@testing-library/jest-dom"
     ],
-    "rootDirs": [
-      ".",
-      "./.react-router/types"
-    ],
+    "rootDirs": [".", "./.react-router/types"],
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./app/*"
-      ]
+      "@/*": ["./app/*"]
     }
   },
   "include": [
@@ -31,9 +26,5 @@
     "react-router.config.ts",
     "tailwind.config.ts"
   ],
-  "exclude": [
-    "node_modules",
-    ".react-router",
-    "public"
-  ]
+  "exclude": ["node_modules", ".react-router", "public"]
 }

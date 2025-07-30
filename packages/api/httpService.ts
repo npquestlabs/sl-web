@@ -1,18 +1,20 @@
-
-import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from "axios";
+import axios, {
+  type AxiosInstance,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+} from 'axios';
 
 export type ApiResponse<T extends object> = T & { error?: string };
 
 const ACCESS_TOKEN_KEY =
-  import.meta.env.VITE_ACCESS_TOKEN_KEY || "access_token";
+  import.meta.env.VITE_ACCESS_TOKEN_KEY || 'access_token';
 const REFRESH_TOKEN_KEY =
-  import.meta.env.VITE_REFRESH_TOKEN_KEY || "refresh_token";
+  import.meta.env.VITE_REFRESH_TOKEN_KEY || 'refresh_token';
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api/v1";
+  import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
 
-const API_CLIENT =
-  import.meta.env.VITE_API_CLIENT || "landlord";
+const API_CLIENT = import.meta.env.VITE_API_CLIENT || 'landlord';
 
 class HttpService {
   private api: AxiosInstance;
@@ -24,8 +26,8 @@ class HttpService {
       baseURL: this.baseURL,
       timeout: 20000,
       headers: {
-        "Content-Type": "application/json",
-        "x-client": API_CLIENT,
+        'Content-Type': 'application/json',
+        'x-client': API_CLIENT,
       },
     });
 
@@ -66,7 +68,7 @@ class HttpService {
           // if (typeof window !== "undefined" && !["/login", "/"].includes(window.location.pathname)) {
           //   window.location.href = "/login";
           // }
-          this.unauthenticatedInterceptor?.()
+          this.unauthenticatedInterceptor?.();
         }
         if (error.response) {
           return Promise.resolve(error.response);
@@ -77,7 +79,7 @@ class HttpService {
   }
 
   public intercept401Response(callback: () => void) {
-    this.unauthenticatedInterceptor = callback
+    this.unauthenticatedInterceptor = callback;
   }
 
   public clear401Interceptor() {
@@ -94,7 +96,10 @@ class HttpService {
     localStorage.removeItem(REFRESH_TOKEN_KEY);
   }
 
-  async get<T extends object>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
+  async get<T extends object>(
+    url: string,
+    config?: AxiosRequestConfig,
+  ): Promise<ApiResponse<T>> {
     const response = await this.api.get<T>(url, config);
     return response.data;
   }
@@ -126,7 +131,10 @@ class HttpService {
     return response.data;
   }
 
-  async delete<T extends object>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
+  async delete<T extends object>(
+    url: string,
+    config?: AxiosRequestConfig,
+  ): Promise<ApiResponse<T>> {
     const response = await this.api.delete<T>(url, config);
     return response.data;
   }

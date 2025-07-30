@@ -1,25 +1,25 @@
 // Core data types for the property management system
 export type ApiUser = {
-  id: string,
-  email: string,
-  avatarUrl?: string,
+  id: string;
+  email: string;
+  avatarUrl?: string;
 };
 
 export type LandlordUser = {
-  id: string,
-  firstName: string,
-  lastName: string,
-  middleName?: string,
-  phone?: string,
-  proofOfOwnership?: string,
-  bankName?: string,
-  bankAccount?: string,
-  mobileMoneyNumber?: string,
-  createdAt?: Date,
-  updatedAt?: Date,
-  deletedAt?: Date,
-  user: ApiUser,
-}
+  id: string;
+  firstName: string;
+  lastName: string;
+  middleName?: string;
+  phone?: string;
+  proofOfOwnership?: string;
+  bankName?: string;
+  bankAccount?: string;
+  mobileMoneyNumber?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
+  user: ApiUser;
+};
 
 export type Complex = {
   id: string;
@@ -68,7 +68,7 @@ export type Lease = {
   startedAt: string;
   endsAt: string;
   rentAmount: number;
-  status: "active" | "terminated" | "expired";
+  status: 'active' | 'terminated' | 'expired';
   tenant?: Tenant;
   unit?: Unit;
   complex?: Complex;
@@ -81,7 +81,7 @@ export type Payment = {
   leaseId: string;
   amount: number;
   currency: string;
-  status: "pending" | "completed" | "failed";
+  status: 'pending' | 'completed' | 'failed';
   paymentDate: string;
   createdAt: string;
   updatedAt: string;
@@ -92,8 +92,8 @@ export type MaintenanceRequest = {
   unitId: string;
   tenantId?: string;
   description: string;
-  status: "pending" | "in_progress" | "completed";
-  priority: "low" | "medium" | "high";
+  status: 'pending' | 'in_progress' | 'completed';
+  priority: 'low' | 'medium' | 'high';
   cost?: number;
   vendorId?: string;
   createdAt: string;
@@ -105,10 +105,10 @@ export type MaintenanceRequest = {
 export type ActivityItem = {
   id: string;
   type:
-  | "lease_signed"
-  | "payment_received"
-  | "maintenance_created"
-  | "maintenance_completed";
+    | 'lease_signed'
+    | 'payment_received'
+    | 'maintenance_created'
+    | 'maintenance_completed';
   title: string;
   description: string;
   date: string;
@@ -156,7 +156,7 @@ export type CreateLeaseRequest = {
 export type CreateMaintenanceRequest = {
   unitId: string;
   description: string;
-  priority?: "low" | "medium" | "high";
+  priority?: 'low' | 'medium' | 'high';
 };
 
 export type RegisterUserSchema = {
@@ -180,7 +180,7 @@ export type RegisterStageTwoRequest = {
 
 export type MessageResponse = {
   message: string;
-}
+};
 
 export type SummaryStats = {
   complexes: number;
@@ -188,13 +188,13 @@ export type SummaryStats = {
   tenants: number;
   payments: number;
   maintenanceRequests: number;
-}
+};
 
 export type Paginated<T> = {
-  data: T[]
+  data: T[];
   meta: {
-    limit: number
-    page: number
-    total: number
-  }
-}
+    limit: number;
+    page: number;
+    total: number;
+  };
+};

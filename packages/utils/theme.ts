@@ -1,5 +1,5 @@
-import { createTheme, responsiveFontSizes } from "@mui/material/styles";
-import { deepmerge } from "@mui/utils";
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+import { deepmerge } from '@mui/utils';
 
 const palette = {
   primary: {
@@ -20,18 +20,18 @@ const palette = {
   success: { main: '#388E3C' },
 };
 
-
 const baseTheme = createTheme({
   palette,
   typography: {
-    fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    fontFamily:
+      '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     h1: { fontWeight: 700 },
     h2: { fontWeight: 700 },
     h3: { fontWeight: 600 },
     h4: { fontWeight: 600 },
     h5: { fontWeight: 600 },
   },
-  
+
   components: {
     MuiButton: {
       defaultProps: {
@@ -79,7 +79,6 @@ const baseTheme = createTheme({
   },
 });
 
-
 const lightTheme = createTheme(
   deepmerge(baseTheme, {
     palette: {
@@ -99,18 +98,18 @@ const lightTheme = createTheme(
         styleOverrides: {
           root: {
             borderColor: 'rgba(0, 0, 0, 0.12)',
-          }
-        }
+          },
+        },
       },
       MuiCard: {
         styleOverrides: {
           root: {
             border: '1px solid rgba(0, 0, 0, 0.12)',
-          }
-        }
-      }
-    }
-  })
+          },
+        },
+      },
+    },
+  }),
 );
 
 const darkTheme = createTheme(
@@ -132,18 +131,18 @@ const darkTheme = createTheme(
         styleOverrides: {
           root: {
             borderColor: 'rgba(255, 255, 255, 0.12)',
-          }
-        }
+          },
+        },
       },
       MuiCard: {
         styleOverrides: {
           root: {
             border: '1px solid rgba(255, 255, 255, 0.12)',
-          }
-        }
-      }
-    }
-  })
+          },
+        },
+      },
+    },
+  }),
 );
 
 const responsiveLightTheme = responsiveFontSizes(lightTheme);

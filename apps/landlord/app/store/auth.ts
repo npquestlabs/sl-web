@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { type LandlordUser } from "@repo/types";
-import { httpService } from "@repo/api/httpService";
+import { create } from 'zustand';
+import { type LandlordUser } from '@repo/types';
+import { httpService } from '@repo/api/httpService';
 
 class AuthState {
   user: LandlordUser | null;
@@ -8,7 +8,10 @@ class AuthState {
   isLoading: boolean = false;
   setIsLoading: (loading: boolean) => void;
   logout: () => void;
-  reload: (options?: { handleError?: (error: Error) => void, handleSuccess?: () => void }) => void;
+  reload: (options?: {
+    handleError?: (error: Error) => void;
+    handleSuccess?: () => void;
+  }) => void;
 
   constructor(
     setUser: (user: LandlordUser | null) => void,
@@ -22,7 +25,7 @@ class AuthState {
       setIsLoading(true);
 
       try {
-        const result = await httpService.get<LandlordUser>("/landlords/me");
+        const result = await httpService.get<LandlordUser>('/landlords/me');
         // const result = await dummyApi.getCurrentUser();
         if (result.error) {
           throw new Error(result.error);
@@ -34,7 +37,9 @@ class AuthState {
         }
       } catch (error) {
         if (options?.handleError) {
-          options.handleError(error instanceof Error ? error : new Error("Unknown error"));
+          options.handleError(
+            error instanceof Error ? error : new Error('Unknown error'),
+          );
         }
       }
 
@@ -64,8 +69,10 @@ export const getCurrentUser = () => {
   const { user } = useAuthStore.getState();
 
   if (!user) {
-    throw new Error("This function must be called from within the DashboardLayout component");
+    throw new Error(
+      'This function must be called from within the DashboardLayout component',
+    );
   }
 
   return user;
-}
+};
