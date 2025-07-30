@@ -14,11 +14,7 @@ import { toast } from 'sonner';
 import { useAuthStore } from '~/store/auth';
 import { httpService } from '@repo/api/httpService';
 import { type MessageResponse } from '@repo/types';
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from '@repo/ui/components/base/otp';
+import { OTP } from '@repo/ui/components/otp';
 
 import {
   Visibility,
@@ -256,21 +252,14 @@ export default function Signup() {
             >
               {email}
             </Typography>
-            .
           </Typography>
 
-          <InputOTP
-            maxLength={6}
-            pattern="^\d+$"
+          <OTP
+            length={6}
+            pattern="^[0-9]*$"
             value={otp}
             onChange={(val) => setOtp(val)}
-          >
-            <InputOTPGroup>
-              {Array.from({ length: 6 }).map((_, index) => (
-                <InputOTPSlot key={index} index={index} />
-              ))}
-            </InputOTPGroup>
-          </InputOTP>
+          />
 
           <Button
             type="submit"

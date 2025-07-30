@@ -1,5 +1,5 @@
 {
-  "name": "apps-landlord",
+  "name": "landlord",
   "private": true,
   "type": "module",
   "scripts": {

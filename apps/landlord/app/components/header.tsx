@@ -26,27 +26,29 @@ import {
   Menu as MenuIcon,
   Logout as LogoutIcon,
   AccountCircle as AccountCircleIcon,
+  Home,
 } from '@mui/icons-material';
-// CORRECTED: Using imports from react-router-dom
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuthStore } from '~/store/auth';
+import { NavLink, useNavigate } from 'react-router';
+import { getCurrentUser, useAuthStore } from '~/store/auth';
 
 const navigation = [
-  { to: '/dashboard', label: 'Dashboard', end: true }, // 'end' prop ensures it's only active for the exact path
+  { to: '/dashboard', label: 'Dashboard', end: true },
   { to: '/dashboard/properties', label: 'Properties' },
-  { to: '/dashboard/leases',label: 'Leases' },
+  { to: '/dashboard/leases', label: 'Leases' },
   { to: '/dashboard/payments', label: 'Payments' },
   { to: '/dashboard/maintenance', label: 'Maintenance' },
 ];
 
 export function Header() {
   const navigate = useNavigate();
-  const { user, logout } = useAuthStore();
+  const user = getCurrentUser();
+  const logout = useAuthStore((state) => state.logout);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) =>
+    setAnchorEl(event.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
 
   const handleLogout = () => {
@@ -59,13 +61,21 @@ export function Header() {
     <AppBar position="static">
       <Toolbar>
         <Stack direction="row" alignItems="center" spacing={2}>
-          <Typography variant="h6" noWrap sx={{ fontWeight: 'bold', a: {textDecoration: 'none', color: 'inherit'} }}>
-            {/* The component prop here tells MUI to render a React Router NavLink */}
-            <NavLink to="/">
-              PropertyPro
-            </NavLink>
+          <Typography
+            variant="h6"
+            noWrap
+            sx={{
+              fontWeight: 'bold',
+              a: { textDecoration: 'none', color: 'inherit' },
+            }}
+          >
+            <NavLink to="/"><Home /></NavLink>
           </Typography>
-          <Stack direction="row" spacing={1} sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <Stack
+            direction="row"
+            spacing={1}
+            sx={{ display: { xs: 'none', md: 'flex' } }}
+          >
             {navigation.map((item) => (
               <Button
                 key={item.to}
@@ -89,7 +99,6 @@ export function Header() {
 
         <Box sx={{ flexGrow: 1 }} />
 
-        {/* --- Right Section (No changes needed here, just the NavLink in the Menu) --- */}
         <Stack direction="row" alignItems="center" spacing={{ xs: 1, sm: 2 }}>
           <Tooltip title="Notifications">
             <IconButton sx={{ color: 'text.secondary' }}>
@@ -100,14 +109,23 @@ export function Header() {
           </Tooltip>
           <Button
             onClick={handleMenuOpen}
-            startIcon={<Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>{user ? `${user.firstName.charAt(0)}${user.lastName.charAt(0)}` : 'G'}</Avatar>}
+            startIcon={
+              <Avatar
+                sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}
+              >{`${user.firstName.charAt(0)}${user.lastName.charAt(0)}`}</Avatar>
+            }
             endIcon={<KeyboardArrowDownIcon />}
             sx={{ color: 'text.primary', display: { xs: 'none', sm: 'flex' } }}
           >
-            {user ? `${user.firstName} ${user.lastName}` : 'Guest'}
+            {`${user.firstName} ${user.lastName}`}
           </Button>
-          <IconButton onClick={handleMenuOpen} sx={{ display: { xs: 'flex', sm: 'none' } }}>
-             <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>{user ? `${user.firstName.charAt(0)}${user.lastName.charAt(0)}` : 'G'}</Avatar>
+          <IconButton
+            onClick={handleMenuOpen}
+            sx={{ display: { xs: 'flex', sm: 'none' } }}
+          >
+            <Avatar
+              sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}
+            >{`${user.firstName.charAt(0)}${user.lastName.charAt(0)}`}</Avatar>
           </IconButton>
           <Menu
             anchorEl={anchorEl}
@@ -115,7 +133,11 @@ export function Header() {
             onClose={handleMenuClose}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           >
-            <MenuItem component={NavLink as any} to="/dashboard/profile" onClick={handleMenuClose}>
+            <MenuItem
+              component={NavLink as any}
+              to="/dashboard/profile"
+              onClick={handleMenuClose}
+            >
               <AccountCircleIcon sx={{ mr: 1.5 }} /> Profile
             </MenuItem>
             <Divider />
@@ -124,17 +146,25 @@ export function Header() {
             </MenuItem>
           </Menu>
 
-          <IconButton onClick={() => setMobileMenuOpen(true)} sx={{ display: { xs: 'flex', md: 'none' }, color: 'text.primary' }}>
+          <IconButton
+            onClick={() => setMobileMenuOpen(true)}
+            sx={{ display: { xs: 'flex', md: 'none' }, color: 'text.primary' }}
+          >
             <MenuIcon />
           </IconButton>
         </Stack>
-        
-        {/* Mobile Drawer now also uses NavLink correctly */}
-        <Drawer anchor="left" open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)}>
+
+        <Drawer
+          anchor="left"
+          open={mobileMenuOpen}
+          onClose={() => setMobileMenuOpen(false)}
+        >
           <Box sx={{ width: 250 }} role="presentation">
             <List>
               <ListItem>
-                 <Typography variant="h6" sx={{ fontWeight: 'bold' }}>PropertyPro</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                  PropertyPro
+                </Typography>
               </ListItem>
               <Divider />
               {navigation.map((item) => (
@@ -145,10 +175,10 @@ export function Header() {
                     end={item.end}
                     onClick={() => setMobileMenuOpen(false)}
                     sx={{
-                        '&.active': {
-                            backgroundColor: 'action.selected',
-                            fontWeight: 'fontWeightBold',
-                        },
+                      '&.active': {
+                        backgroundColor: 'action.selected',
+                        fontWeight: 'fontWeightBold',
+                      },
                     }}
                   >
                     <ListItemText primary={item.label} />

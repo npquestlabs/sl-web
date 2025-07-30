@@ -18,10 +18,12 @@ import {
   Divider,
   Link,
   IconButton,
+  alpha,
 } from "@mui/material";
 
 import { motion } from "framer-motion";
 
+// UPDATED ICONS
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import DescriptionIcon from "@mui/icons-material/Description";
 import PaymentIcon from "@mui/icons-material/Payment";
@@ -31,16 +33,19 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import { House } from "@mui/icons-material";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import PeopleIcon from "@mui/icons-material/People";
+import HandymanIcon from "@mui/icons-material/Handyman";
 
 export function meta() {
   return [
-    { title: "PropertyPro" },
-    { name: "description", content: "Welcome to PropertyPro!" },
+    { title: "PropertyPro - Automate Your Rentals" },
+    {
+      name: "description",
+      content:
+        "The all-in-one platform for landlords, tenants, and vendors. Automate rent collection, manage leases, and coordinate maintenance effortlessly.",
+    },
   ];
-}
-
-export function loader() {
-  return { ssr: 'SSR is working!' }
 }
 
 export default function Welcome() {
@@ -98,8 +103,7 @@ export default function Welcome() {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        background:
-          "linear-gradient(to bottom right, #eff6ff, #ffffff, #e0f2fe)",
+        backgroundColor: "background.default",
         fontFamily: "Public Sans, Noto Sans, sans-serif",
       }}
     >
@@ -108,11 +112,15 @@ export default function Welcome() {
         position="sticky"
         elevation={scrolled ? 2 : 0}
         sx={{
-          background: scrolled ? "rgba(255, 255, 255, 0.8)" : "transparent",
+          backgroundColor: (theme) =>
+            scrolled
+              ? alpha(theme.palette.background.paper, 0.8)
+              : "transparent",
           backdropFilter: "blur(10px)",
           transition: (theme) =>
             theme.transitions.create(["background-color", "box-shadow"]),
-          borderBottom: scrolled ? "1px solid #e0e0e0" : "none",
+          borderBottom: (theme) =>
+            scrolled ? `1px solid ${theme.palette.divider}` : "none",
           color: "text.primary",
         }}
       >
@@ -141,9 +149,12 @@ export default function Welcome() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", gap: 2 }}>
               <Button variant="text" onClick={() => smoothScroll("features")}>
                 Features
+              </Button>
+              <Button variant="text" onClick={() => smoothScroll("platform")}>
+                Platform
               </Button>
               <Button
                 variant="text"
@@ -153,7 +164,9 @@ export default function Welcome() {
               </Button>
               {user ? (
                 <Avatar sx={{ bgcolor: "primary.main" }}>
-                  {`${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase()}
+                  {`${user.firstName.charAt(0)}${user.lastName.charAt(
+                    0
+                  )}`.toUpperCase()}
                 </Avatar>
               ) : (
                 <Button variant="outlined" onClick={() => navigate("/login")}>
@@ -167,7 +180,7 @@ export default function Welcome() {
 
       {/* Main Content Area */}
       <Box component="main" sx={{ flexGrow: 1 }}>
-        {/* Hero Section */}
+        {/* === HERO SECTION (UPDATED) === */}
         <Container
           maxWidth="md"
           sx={{ textAlign: "center", py: { xs: 8, md: 16 } }}
@@ -177,96 +190,93 @@ export default function Welcome() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <Card elevation={0} sx={{ p: 4, background: "transparent" }}>
-              <Chip
-                label="Elevate Your Property Management"
-                color="primary"
-                variant="outlined"
-                sx={{ mb: 3 }}
-              />
-              <Typography
-                variant="h2"
-                component="h1"
-                sx={{ fontWeight: 800, color: "primary.darker", mb: 2 }}
-              >
-                Simplify Property Management
-              </Typography>
-              <Typography
-                variant="h6"
-                color="text.secondary"
-                sx={{ maxWidth: "600px", mx: "auto", mb: 4 }}
-              >
-                Manage your properties, leases, payments, and maintenance
-                requests all in one place. Streamline your workflow and maximize
-                your returns with PropertyPro.
-              </Typography>
-              <Button
-                variant="contained"
-                size="large"
-                onClick={() => navigate("/dashboard")}
-                sx={{
-                  px: 5,
-                  py: 1.5,
-                  borderRadius: "999px",
-                  fontWeight: "bold",
-                }}
-              >
-                Get Started
-              </Button>
-            </Card>
+            <Chip
+              label="Automation & Collaboration for Modern Landlords"
+              color="primary"
+              variant="outlined"
+              sx={{ mb: 3 }}
+            />
+            <Typography
+              variant="h2"
+              component="h1"
+              sx={{ fontWeight: 800, color: "primary.dark", mb: 2 }}
+            >
+              Automate Your Rentals, From Lease to Final Payment.
+            </Typography>
+            <Typography
+              variant="h6"
+              color="text.secondary"
+              sx={{ maxWidth: "700px", mx: "auto", mb: 4 }}
+            >
+              Finally, a single platform to manage your portfolio, sign digital
+              leases, automate rent collection, and coordinate maintenance with
+              tenants and vendors.
+            </Typography>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => navigate("/dashboard")}
+              sx={{
+                px: 5,
+                py: 1.5,
+                borderRadius: "999px",
+                fontWeight: "bold",
+              }}
+            >
+              Get Started
+            </Button>
           </motion.div>
         </Container>
 
-        {/* Features Section */}
-        <Box id="features" sx={{ py: 8, bgcolor: "rgba(255,255,255,0.5)" }}>
+        {/* === FEATURES SECTION (UPDATED) === */}
+        <Box id="features" sx={{ py: 8, bgcolor: "background.paper" }}>
           <Container maxWidth="lg">
             <Typography
               variant="h4"
               sx={{
                 fontWeight: "bold",
                 textAlign: "center",
-                color: "primary.darker",
+                color: "primary.dark",
                 mb: 2,
               }}
             >
-              Key Features
+              Everything You Need, All In One Place
             </Typography>
             <Typography
               color="text.secondary"
               sx={{ textAlign: "center", maxWidth: "600px", mx: "auto", mb: 6 }}
             >
-              PropertyPro offers a comprehensive suite of tools to streamline
-              your property management tasks.
+              Our comprehensive suite of tools is designed to save you time and
+              reduce the complexity of property management.
             </Typography>
             <Grid container spacing={4}>
-              {/* Feature Cards - Mapped for cleaner code */}
               {[
                 {
                   icon: <HomeWorkIcon color="primary" sx={{ fontSize: 40 }} />,
-                  title: "Property Management",
-                  desc: "Efficiently manage all your properties from a single dashboard.",
+                  title: "Centralized Portfolio Management",
+                  desc: "Group your units into complexes. Get a bird's-eye view of your entire property portfolio, from country to a single room.",
                 },
                 {
                   icon: (
                     <DescriptionIcon color="primary" sx={{ fontSize: 40 }} />
                   ),
-                  title: "Lease Management",
-                  desc: "Easily create, manage, and track leases with automated reminders.",
+                  title: "Digital & Automated Leasing",
+                  desc: "Create, manage, and store lease agreements digitally. Our system tracks dates and sends automated renewal reminders.",
                 },
                 {
                   icon: <PaymentIcon color="primary" sx={{ fontSize: 40 }} />,
-                  title: "Payment Processing",
-                  desc: "Securely process rent payments and track payment history.",
+                  title: "Automated Rent Collection",
+                  desc: "Accept payments via Card, Bank Transfer, or Mobile Money. We automatically track due dates and record payments.",
                 },
                 {
                   icon: <BuildIcon color="primary" sx={{ fontSize: 40 }} />,
-                  title: "Maintenance Tracking",
-                  desc: "Track and manage maintenance requests with real-time updates.",
+                  title: "Collaborative Maintenance",
+                  desc: "Allow tenants to submit requests with photos. Assign jobs to vendors and track the status from 'Pending' to 'Completed'.",
                 },
               ].map((item, index) => (
                 <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
                   <Card
-                    elevation={2}
+                    elevation={0}
                     sx={{
                       p: 3,
                       textAlign: "center",
@@ -288,15 +298,84 @@ export default function Welcome() {
           </Container>
         </Box>
 
-        {/* Testimonials Section */}
-        <Box id="testimonials" sx={{ py: 8 }}>
+        {/* === NEW SECTION: PLATFORM FOR EVERYONE === */}
+        <Box id="platform" sx={{ py: 8 }}>
           <Container maxWidth="lg">
             <Typography
               variant="h4"
               sx={{
                 fontWeight: "bold",
                 textAlign: "center",
-                color: "primary.darker",
+                color: "primary.dark",
+                mb: 2,
+              }}
+            >
+              A Seamless Experience for Everyone
+            </Typography>
+            <Typography
+              color="text.secondary"
+              sx={{ textAlign: "center", maxWidth: "600px", mx: "auto", mb: 6 }}
+            >
+              PropertyPro connects landlords, tenants, and vendors on a single,
+              easy-to-use platform, creating a transparent and efficient
+              ecosystem.
+            </Typography>
+            <Grid container spacing={4} justifyContent="center">
+              {[
+                {
+                  icon: (
+                    <AdminPanelSettingsIcon
+                      color="primary"
+                      sx={{ fontSize: 40 }}
+                    />
+                  ),
+                  role: "For Landlords",
+                  desc: "Complete oversight of your finances, properties, and people. Reduce manual work and maximize your returns.",
+                },
+                {
+                  icon: <PeopleIcon color="primary" sx={{ fontSize: 40 }} />,
+                  role: "For Tenants",
+                  desc: "A simple way to pay rent, view your lease, and report issues. Invite tenants to join or manage them manually—they can claim their data anytime.",
+                },
+                {
+                  icon: <HandymanIcon color="primary" sx={{ fontSize: 40 }} />,
+                  role: "For Vendors",
+                  desc: "Receive job requests, provide quotes, and manage your schedule. A direct line to property managers for faster work and payment.",
+                },
+              ].map((item) => (
+                <Grid size={{ xs: 12, md: 4 }} key={item.role}>
+                  <Card
+                    elevation={0}
+                    sx={{
+                      p: 3,
+                      textAlign: "center",
+                      height: "100%",
+                      borderRadius: 2,
+                    }}
+                  >
+                    <Box sx={{ mb: 2 }}>{item.icon}</Box>
+                    <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+                      {item.role}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {item.desc}
+                    </Typography>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </Box>
+
+        {/* Testimonials Section (No Changes) */}
+        <Box id="testimonials" sx={{ py: 8, bgcolor: "background.paper" }}>
+          <Container maxWidth="lg">
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: "bold",
+                textAlign: "center",
+                color: "primary.dark",
                 mb: 6,
               }}
             >
@@ -304,22 +383,30 @@ export default function Welcome() {
             </Typography>
             <Grid container spacing={3}>
               {testimonials.map((t, index) => (
-                // The `item` prop is removed. `xs` and `md` work as intended.
                 <Grid size={{ xs: 12, md: 4 }} key={index}>
-                  <Card elevation={2} sx={{ height: "100%", borderRadius: 2 }}>
+                  <Card
+                    elevation={0}
+                    sx={{ height: "100%", borderRadius: 2 }}
+                  >
                     <CardHeader
                       avatar={<Avatar src={t.avatar} alt={t.name} />}
                       title={t.name}
                       subheader={t.date}
                     />
                     <CardContent>
-                      <Box sx={{ display: "flex", mb: 1, color: "#ffb400" }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          mb: 1,
+                          color: "warning.main",
+                        }}
+                      >
                         {[...Array(t.rating)].map((_, i) => (
                           <StarIcon key={i} fontSize="small" />
                         ))}
                       </Box>
                       <Typography variant="body2" color="text.secondary">
-                        &quot;{t.text}&quot;
+                        {`"${t.text}"`}
                       </Typography>
                     </CardContent>
                   </Card>
@@ -330,43 +417,147 @@ export default function Welcome() {
         </Box>
       </Box>
 
-      {/* Footer */}
-      <Box component="footer" sx={{ mt: "auto", py: 4, px: 2 }}>
-        <Divider sx={{ mb: 4 }} />
+      {/* === FOOTER (EXPANDED) === */}
+      <Box
+        component="footer"
+        sx={{
+          mt: "auto",
+          py: 6,
+          px: 2,
+          bgcolor: "background.paper",
+        }}
+      >
         <Container maxWidth="lg">
+          <Grid container spacing={4} justifyContent="space-between">
+            <Grid size={{ xs: 12, md: 4 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1.5,
+                  color: "primary.main",
+                  mb: 2,
+                }}
+              >
+                <House className="size-6" />
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  PropertyPro
+                </Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary">
+                The modern solution for rental property management.
+              </Typography>
+            </Grid>
+            <Grid size={{ xs: 6, md: 2 }}>
+              <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+                Product
+              </Typography>
+              <Link
+                href="#"
+                color="text.secondary"
+                display="block"
+                underline="hover"
+                sx={{ mb: 0.5 }}
+              >
+                Features
+              </Link>
+              <Link
+                href="#"
+                color="text.secondary"
+                display="block"
+                underline="hover"
+                sx={{ mb: 0.5 }}
+              >
+                Pricing
+              </Link>
+              <Link
+                href="#"
+                color="text.secondary"
+                display="block"
+                underline="hover"
+                sx={{ mb: 0.5 }}
+              >
+                Security
+              </Link>
+            </Grid>
+            <Grid size={{ xs: 6, md: 2 }}>
+              <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+                Company
+              </Typography>
+              <Link
+                href="#"
+                color="text.secondary"
+                display="block"
+                underline="hover"
+                sx={{ mb: 0.5 }}
+              >
+                About Us
+              </Link>
+              <Link
+                href="#"
+                color="text.secondary"
+                display="block"
+                underline="hover"
+                sx={{ mb: 0.5 }}
+              >
+                Careers
+              </Link>
+              <Link
+                href="#"
+                color="text.secondary"
+                display="block"
+                underline="hover"
+                sx={{ mb: 0.5 }}
+              >
+                Contact
+              </Link>
+            </Grid>
+            <Grid size={{ xs: 6, md: 2 }}>
+              <Typography sx={{ fontWeight: "bold", mb: 1 }}>Legal</Typography>
+              <Link
+                href="#"
+                color="text.secondary"
+                display="block"
+                underline="hover"
+                sx={{ mb: 0.5 }}
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="#"
+                color="text.secondary"
+                display="block"
+                underline="hover"
+                sx={{ mb: 0.5 }}
+              >
+                Terms of Service
+              </Link>
+            </Grid>
+          </Grid>
+          <Divider sx={{ my: 4 }} />
           <Box
             sx={{
               display: "flex",
-              justifyContent: "center",
-              gap: 4,
-              mb: 2,
-              flexWrap: "wrap",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexDirection: { xs: "column", sm: "row" },
             }}
           >
-            <Link href="#" color="text.secondary" underline="hover">
-              Contact Us
-            </Link>
-            <Link href="#" color="text.secondary" underline="hover">
-              Privacy Policy
-            </Link>
-            <Link href="#" color="text.secondary" underline="hover">
-              Terms of Service
-            </Link>
+            <Typography variant="body2" color="text.secondary">
+              © {new Date().getFullYear()} PropertyPro. All rights reserved.
+            </Typography>
+            <Box sx={{ mt: { xs: 2, sm: 0 } }}>
+              <IconButton href="#" aria-label="Twitter">
+                <TwitterIcon color="primary" />
+              </IconButton>
+              <IconButton href="#" aria-label="Facebook">
+                <FacebookIcon color="primary" />
+              </IconButton>
+              <IconButton href="#" aria-label="Instagram">
+                <InstagramIcon color="primary" />
+              </IconButton>
+            </Box>
           </Box>
-          <Box sx={{ textAlign: "center", mb: 2 }}>
-            <IconButton href="#" aria-label="Twitter">
-              <TwitterIcon color="primary" />
-            </IconButton>
-            <IconButton href="#" aria-label="Facebook">
-              <FacebookIcon color="primary" />
-            </IconButton>
-            <IconButton href="#" aria-label="Instagram">
-              <InstagramIcon sx={{ color: "#E1306C" }} />
-            </IconButton>
-          </Box>
-          <Typography variant="body2" color="text.secondary" align="center">
-            © {new Date().getFullYear()} PropertyPro. All rights reserved.
-          </Typography>
         </Container>
       </Box>
     </Box>

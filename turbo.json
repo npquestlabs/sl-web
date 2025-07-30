@@ -5,8 +5,14 @@
   "globalDependencies": ["**/.env.*local"],
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [
+        "build/**",
+        ".vercel/**",
+        "dist/**",
+        ".next/**",
+        "!.next/cache/**"
+      ]
     },
     "dev": {
       "cache": false,
@@ -17,21 +23,6 @@
     },
     "check-types": {
       "dependsOn": ["^check-types"]
-    },
-    "db:studio": {
-      "cache": false,
-      "persistent": true
-    },
-    "db:generate": {
-      "cache": false
-    },
-    "db:migrate": {
-      "cache": false
-    },
-
-    "@repo/database#db:generate": {
-      "cache": false,
-      "dependsOn": ["@repo/auth#db:generate"]
     }
   }
 }

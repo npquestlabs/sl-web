@@ -59,3 +59,13 @@ export const useAuthStore = create<AuthState>(
       (loading) => set({ isLoading: loading }),
     ),
 );
+
+export const getCurrentUser = () => {
+  const { user } = useAuthStore.getState();
+
+  if (!user) {
+    throw new Error("This function must be called from within the DashboardLayout component");
+  }
+
+  return user;
+}
