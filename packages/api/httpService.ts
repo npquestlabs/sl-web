@@ -14,7 +14,7 @@ const REFRESH_TOKEN_KEY =
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
 
-const API_CLIENT = import.meta.env.VITE_API_CLIENT || 'landlord';
+const API_CLIENT = import.meta.env.VITE_API_CLIENT || 'not-set';
 
 class HttpService {
   private api: AxiosInstance;
@@ -65,9 +65,6 @@ class HttpService {
         if (error.response?.status === 401) {
           // Remove tokens on 401
           this.clearTokens();
-          // if (typeof window !== "undefined" && !["/login", "/"].includes(window.location.pathname)) {
-          //   window.location.href = "/login";
-          // }
           this.unauthenticatedInterceptor?.();
         }
         if (error.response) {

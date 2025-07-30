@@ -1,24 +1,21 @@
-// Core data types for the property management system
-export type ApiUser = {
+export * from "./landlord";
+export * from "./tenant";
+export * from "./vendor";
+
+export type ApiData = {
   id: string;
   email: string;
   avatarUrl?: string;
 };
 
-export type LandlordUser = {
+export type GenericUser = {
   id: string;
   firstName: string;
   lastName: string;
-  middleName?: string;
-  phone?: string;
-  proofOfOwnership?: string;
-  bankName?: string;
-  bankAccount?: string;
-  mobileMoneyNumber?: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
-  user: ApiUser;
+  user: ApiData;
 };
 
 export type Complex = {
@@ -105,10 +102,10 @@ export type MaintenanceRequest = {
 export type ActivityItem = {
   id: string;
   type:
-    | 'lease_signed'
-    | 'payment_received'
-    | 'maintenance_created'
-    | 'maintenance_completed';
+  | 'lease_signed'
+  | 'payment_received'
+  | 'maintenance_created'
+  | 'maintenance_completed';
   title: string;
   description: string;
   date: string;

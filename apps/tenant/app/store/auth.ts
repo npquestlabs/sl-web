@@ -1,8 +1,8 @@
 import { create } from 'zustand';
-import { type LandlordUser } from '@repo/types';
+import { type TenantUser } from '@repo/types';
 import { AuthState } from '@repo/utils/auth';
 
-export const useAuthStore = create<AuthState<LandlordUser>>(
+export const useAuthStore = create<AuthState<TenantUser>>(
   (set) =>
     new AuthState(
       (user) => set({ user }),
