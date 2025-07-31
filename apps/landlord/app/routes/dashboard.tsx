@@ -1,7 +1,11 @@
 import { Box, CircularProgress, useTheme } from '@mui/material';
 import { httpService } from '@repo/api/httpService';
 import { useEffect } from 'react';
-import { Navigate, Outlet, useLoaderData, useNavigate } from 'react-router';
+import {
+  Outlet,
+  redirect,
+  useNavigate,
+} from 'react-router';
 import { toast } from 'sonner';
 import { Header } from '~/components/header';
 import { useAuthStore } from '~/store/auth';
@@ -9,7 +13,15 @@ import { useAuthStore } from '~/store/auth';
 export async function clientLoader() {
   const { user, refetch } = useAuthStore.getState();
   if (user) return user;
-  return await refetch();
+  const refetchedUser = await refetch();
+
+  if (!refetchedUser) {
+    toast.error('Kindly login first');
+
+    return redirect('/login');
+  }
+
+  return refetchedUser;
 }
 
 export function HydrateFallback() {
@@ -30,13 +42,7 @@ export function HydrateFallback() {
 export default function DashboardLayout() {
   const navigate = useNavigate();
   const theme = useTheme();
-  const user = useLoaderData<typeof clientLoader>();
-
-  useEffect(() => {
-    if (!user) {
-      toast.error('Failed to load user data');
-    }
-  }, [user]);
+  //const user = useLoaderData<typeof clientLoader>();
 
   useEffect(() => {
     httpService.intercept401Response(() => {
@@ -47,10 +53,6 @@ export default function DashboardLayout() {
       httpService.clear401Interceptor();
     };
   }, [navigate]);
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>

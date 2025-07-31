@@ -1,4 +1,4 @@
-import { GenericUser } from '@repo/types';
+import { type GenericUser } from '@repo/types';
 import { httpService } from '@repo/api/httpService';
 
 export class AuthState<T extends GenericUser> {

@@ -1,7 +1,14 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
-  "globalEnv": ["DEV", "NODE_ENV"],
+  "globalEnv": [
+    "DEV",
+    "VITE_API_BASE_URL",
+    "VITE_SOCKET_BASE_URL",
+    "VITE_ACCESS_TOKEN_KEY",
+    "VITE_REFRESH_TOKEN_KEY",
+    "VITE_CONSOLE_NAME"
+  ],
   "globalDependencies": ["**/.env.*local"],
   "tasks": {
     "build": {
