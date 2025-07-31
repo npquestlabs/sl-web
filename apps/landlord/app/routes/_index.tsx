@@ -38,11 +38,11 @@ import HandymanIcon from '@mui/icons-material/Handyman';
 
 export function meta() {
   return [
-    { title: 'PropertyPro - Automate Your Rentals' },
+    { title: 'PropertyPro - Rentals Management for property Owners' },
     {
       name: 'description',
       content:
-        'The all-in-one platform for landlords, tenants, and vendors. Automate rent collection, manage leases, and coordinate maintenance effortlessly.',
+        'Automate rent collection, manage leases, and coordinate maintenance effortlessly.',
     },
   ];
 }
