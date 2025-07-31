@@ -7,14 +7,21 @@ import axios, {
 export type ApiResponse<T extends object> = T & { error?: string };
 
 const ACCESS_TOKEN_KEY =
-  import.meta.env.VITE_ACCESS_TOKEN_KEY || 'access_token';
+  import.meta.env?.VITE_ACCESS_TOKEN_KEY ||
+  process.env?.VITE_ACCESS_TOKEN_KEY ||
+  'access_token';
 const REFRESH_TOKEN_KEY =
-  import.meta.env.VITE_REFRESH_TOKEN_KEY || 'refresh_token';
+  import.meta.env?.VITE_REFRESH_TOKEN_KEY ||
+  process.env?.VITE_REFRESH_TOKEN_KEY ||
+  'refresh_token';
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
+  import.meta.env?.VITE_API_BASE_URL ||
+  process.env?.VITE_API_BASE_URL ||
+  'http://localhost:5000/api/v1';
 
-const API_CLIENT = import.meta.env.VITE_API_CLIENT || 'not-set';
+const API_CLIENT =
+  import.meta.env?.VITE_API_CLIENT || process.env?.VITE_API_CLIENT || 'not-set';
 
 class HttpService {
   private api: AxiosInstance;
