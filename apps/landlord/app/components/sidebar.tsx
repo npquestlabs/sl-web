@@ -10,15 +10,15 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import {
-  Dashboard as DashboardIcon,
-  Business as BusinessIcon,
-  Article as ArticleIcon,
-  Payment as PaymentIcon,
-  Construction as ConstructionIcon,
-  Handyman as HandymanIcon,
-  House,
-} from '@mui/icons-material';
+
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import BusinessIcon from '@mui/icons-material/Business';
+import ArticleIcon from '@mui/icons-material/Article';
+import PaymentIcon from '@mui/icons-material/Payment';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import HandymanIcon from '@mui/icons-material/Handyman';
+import HouseIcon from '@mui/icons-material/House';
+
 import { NavLink } from 'react-router';
 
 export const navConfig = [
@@ -75,7 +75,9 @@ export function Sidebar({ drawerWidth, isCollapsed }: SidebarProps) {
           p: 2,
         }}
       >
-        <House sx={{ mr: isCollapsed ? 0 : 1.5, transition: 'margin 0.2s' }} />
+        <HouseIcon
+          sx={{ mr: isCollapsed ? 0 : 1.5, transition: 'margin 0.2s' }}
+        />
         <Typography
           variant="h6"
           noWrap

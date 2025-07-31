@@ -18,14 +18,14 @@ import {
   Avatar,
 } from '@mui/material';
 
-import {
-  LockOutlined,
-  Visibility,
-  VisibilityOff,
-  CheckCircleOutline,
-  ErrorOutline,
-  ArrowBack,
-} from '@mui/icons-material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 import { useAuthStore } from '~/store/auth';
 
 type PageState = 'verifying' | 'form' | 'resetting' | 'success';
@@ -152,7 +152,7 @@ export default function ResetPassword() {
             textAlign: 'center',
           }}
         >
-          <ErrorOutline sx={{ fontSize: 64, color: 'error.main' }} />
+          <ErrorOutlineIcon sx={{ fontSize: 64, color: 'error.main' }} />
           <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
             {error.title}
           </Typography>
@@ -196,7 +196,9 @@ export default function ResetPassword() {
               textAlign: 'center',
             }}
           >
-            <CheckCircleOutline sx={{ fontSize: 64, color: 'success.main' }} />
+            <CheckCircleOutlineIcon
+              sx={{ fontSize: 64, color: 'success.main' }}
+            />
             <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
               Password Reset!
             </Typography>
@@ -228,7 +230,7 @@ export default function ResetPassword() {
                 input: {
                   startAdornment: (
                     <InputAdornment position="start">
-                      <LockOutlined />
+                      <LockOutlinedIcon />
                     </InputAdornment>
                   ),
                   endAdornment: (
@@ -237,7 +239,11 @@ export default function ResetPassword() {
                         onClick={() => setShowPassword((v) => !v)}
                         edge="end"
                       >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                        {showPassword ? (
+                          <VisibilityOffIcon />
+                        ) : (
+                          <VisibilityIcon />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -254,7 +260,7 @@ export default function ResetPassword() {
                 input: {
                   startAdornment: (
                     <InputAdornment position="start">
-                      <LockOutlined />
+                      <LockOutlinedIcon />
                     </InputAdornment>
                   ),
                 },
@@ -335,7 +341,7 @@ export default function ResetPassword() {
       <Button
         variant="text"
         component={Link as any}
-        startIcon={<ArrowBack />}
+        startIcon={<ArrowBackIcon />}
         to={action.href}
         sx={{ mt: 4, color: 'text.secondary' }}
       >

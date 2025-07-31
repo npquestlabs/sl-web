@@ -13,7 +13,8 @@ import { toast } from 'sonner';
 import { httpService } from '@repo/api/httpService';
 import { type MessageResponse } from '@repo/types';
 
-import { MailOutline, CheckCircleOutline } from '@mui/icons-material';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -52,7 +53,9 @@ export default function ForgotPassword() {
             gap: 2,
           }}
         >
-          <CheckCircleOutline sx={{ fontSize: 60, color: 'success.main' }} />
+          <CheckCircleOutlineIcon
+            sx={{ fontSize: 60, color: 'success.main' }}
+          />
           <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold' }}>
             Check your inbox
           </Typography>
@@ -106,7 +109,7 @@ export default function ForgotPassword() {
               input: {
                 startAdornment: (
                   <InputAdornment position="start">
-                    <MailOutline sx={{ color: 'text.secondary' }} />
+                    <MailOutlineIcon sx={{ color: 'text.secondary' }} />
                   </InputAdornment>
                 ),
               },

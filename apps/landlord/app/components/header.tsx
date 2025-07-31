@@ -20,14 +20,14 @@ import {
   ListItemText,
   Divider,
 } from '@mui/material';
-import {
-  Notifications as NotificationsIcon,
-  KeyboardArrowDown as KeyboardArrowDownIcon,
-  Menu as MenuIcon,
-  Logout as LogoutIcon,
-  AccountCircle as AccountCircleIcon,
-  Home,
-} from '@mui/icons-material';
+
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import MenuIcon from '@mui/icons-material/Menu';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Home from '@mui/icons-material/Home';
+
 import { NavLink, useNavigate } from 'react-router';
 import { getCurrentUser, useAuthStore } from '~/store/auth';
 

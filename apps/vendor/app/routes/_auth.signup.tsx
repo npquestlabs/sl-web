@@ -11,18 +11,15 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { toast } from 'sonner';
-import { useAuthStore } from '~/store/auth';
 import { httpService } from '@repo/api/httpService';
 import { type MessageResponse } from '@repo/types';
 import { OTP } from '@repo/ui/components/otp';
 
-import {
-  Visibility,
-  VisibilityOff,
-  MailOutline,
-  LockOutlined,
-  PersonOutline,
-} from '@mui/icons-material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 export default function Signup() {
   const [firstName, setFirstName] = useState('');
@@ -34,7 +31,7 @@ export default function Signup() {
   const [otp, setOtp] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const reload = useAuthStore((state) => state.reload);
+  //const refetch = useAuthStore((state) => state.refetch);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,7 +64,7 @@ export default function Signup() {
       if (result.error) throw new Error(result.error);
 
       toast.success(result.message ?? 'Account created!');
-      reload();
+      //await refetch();
       navigate('/dashboard');
     } catch (error) {
       toast.error(
@@ -107,7 +104,7 @@ export default function Signup() {
               input: {
                 startAdornment: (
                   <InputAdornment position="start">
-                    <PersonOutline sx={{ color: 'text.secondary' }} />
+                    <PersonOutlineIcon sx={{ color: 'text.secondary' }} />
                   </InputAdornment>
                 ),
               },
@@ -127,7 +124,7 @@ export default function Signup() {
               input: {
                 startAdornment: (
                   <InputAdornment position="start">
-                    <PersonOutline sx={{ color: 'text.secondary' }} />
+                    <PersonOutlineIcon sx={{ color: 'text.secondary' }} />
                   </InputAdornment>
                 ),
               },
@@ -148,7 +145,7 @@ export default function Signup() {
               input: {
                 startAdornment: (
                   <InputAdornment position="start">
-                    <MailOutline sx={{ color: 'text.secondary' }} />
+                    <MailOutlineIcon sx={{ color: 'text.secondary' }} />
                   </InputAdornment>
                 ),
               },
@@ -169,7 +166,7 @@ export default function Signup() {
               input: {
                 startAdornment: (
                   <InputAdornment position="start">
-                    <LockOutlined sx={{ color: 'text.secondary' }} />
+                    <LockOutlinedIcon sx={{ color: 'text.secondary' }} />
                   </InputAdornment>
                 ),
                 endAdornment: (
@@ -179,7 +176,11 @@ export default function Signup() {
                       onClick={() => setShowPassword((v) => !v)}
                       edge="end"
                     >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                      {showPassword ? (
+                        <VisibilityOffIcon />
+                      ) : (
+                        <VisibilityIcon />
+                      )}
                     </IconButton>
                   </InputAdornment>
                 ),

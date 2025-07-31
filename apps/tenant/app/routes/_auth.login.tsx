@@ -11,15 +11,12 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { toast } from 'sonner';
-import { useAuthStore } from '~/store/auth';
 import { httpService } from '@repo/api/httpService';
 
-import {
-  Visibility,
-  VisibilityOff,
-  MailOutline,
-  LockOutlined,
-} from '@mui/icons-material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -27,7 +24,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loggingIn, setLoggingIn] = useState(false);
   const navigate = useNavigate();
-  const { reload } = useAuthStore();
+  //const { refetch } = useAuthStore();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +33,7 @@ export default function LoginPage() {
       const result = await httpService.post('/auth/login', { email, password });
       if (result.error) throw new Error(result.error);
 
-      reload();
+      //await refetch();
       toast.success('Login successful!');
       navigate('/dashboard');
     } catch (error) {
@@ -78,7 +75,7 @@ export default function LoginPage() {
           input: {
             startAdornment: (
               <InputAdornment position="start">
-                <MailOutline sx={{ color: 'text.secondary' }} />
+                <MailOutlineIcon sx={{ color: 'text.secondary' }} />
               </InputAdornment>
             ),
           },
@@ -99,7 +96,7 @@ export default function LoginPage() {
           input: {
             startAdornment: (
               <InputAdornment position="start">
-                <LockOutlined sx={{ color: 'text.secondary' }} />
+                <LockOutlinedIcon sx={{ color: 'text.secondary' }} />
               </InputAdornment>
             ),
             endAdornment: (
@@ -109,7 +106,7 @@ export default function LoginPage() {
                   onClick={() => setShowPassword((v) => !v)}
                   edge="end"
                 >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                 </IconButton>
               </InputAdornment>
             ),

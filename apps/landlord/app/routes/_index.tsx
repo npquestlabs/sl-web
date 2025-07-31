@@ -23,7 +23,6 @@ import {
 
 import { motion } from 'framer-motion';
 
-// UPDATED ICONS
 import HomeWorkIcon from '@mui/icons-material/HomeWork';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PaymentIcon from '@mui/icons-material/Payment';
@@ -32,7 +31,7 @@ import StarIcon from '@mui/icons-material/Star';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import { House } from '@mui/icons-material';
+import HouseIcon from '@mui/icons-material/House';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import PeopleIcon from '@mui/icons-material/People';
 import HandymanIcon from '@mui/icons-material/Handyman';
@@ -138,7 +137,7 @@ export default function Welcome() {
                 color: 'primary.main',
               }}
             >
-              <House className="size-6" />
+              <HouseIcon className="size-6" />
               <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                 PropertyPro
               </Typography>
@@ -442,7 +441,7 @@ export default function Welcome() {
                   mb: 2,
                 }}
               >
-                <House className="size-6" />
+                <HouseIcon className="size-6" />
                 <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                   PropertyPro
                 </Typography>

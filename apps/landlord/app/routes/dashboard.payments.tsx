@@ -7,13 +7,13 @@ import {
   Skeleton,
   Typography,
 } from '@mui/material';
-import {
-  Apartment,
-  House,
-  Description,
-  AttachMoney,
-  Build,
-} from '@mui/icons-material';
+
+import ApartmentIcon from '@mui/icons-material/Apartment';
+import HouseIcon from '@mui/icons-material/House';
+import DescriptionIcon from '@mui/icons-material/Description';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import BuildIcon from '@mui/icons-material/Build';
+
 import { type SummaryStats } from '@repo/types';
 import { httpService } from '@repo/api/httpService';
 import { getCurrentUser } from '~/store/auth';
@@ -21,11 +21,11 @@ import { toast } from 'sonner';
 import { useEffect } from 'react';
 
 const iconMap = {
-  complexes: Apartment,
-  units: House,
-  tenants: Description,
-  payments: AttachMoney,
-  maintenanceRequests: Build,
+  complexes: ApartmentIcon,
+  units: HouseIcon,
+  tenants: DescriptionIcon,
+  payments: AttachMoneyIcon,
+  maintenanceRequests: BuildIcon,
 };
 
 export default function DashboardPage() {

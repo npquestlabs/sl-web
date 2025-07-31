@@ -23,7 +23,7 @@ import {
 
 import { motion } from 'framer-motion';
 
-import { House } from '@mui/icons-material';
+import HouseIcon from '@mui/icons-material/House';
 import HandymanIcon from '@mui/icons-material/Handyman';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
@@ -135,7 +135,7 @@ export default function Welcome() {
                 color: 'primary.main',
               }}
             >
-              <House className="size-6" />
+              <HouseIcon className="size-6" />
               <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                 PropertyPro
               </Typography>
@@ -380,7 +380,7 @@ export default function Welcome() {
                   mb: 2,
                 }}
               >
-                <House className="size-6" />
+                <HouseIcon className="size-6" />
                 <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                   PropertyPro
                 </Typography>

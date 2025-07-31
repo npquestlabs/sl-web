@@ -23,7 +23,8 @@ import {
 
 import { motion } from 'framer-motion';
 
-import { House, Notifications } from '@mui/icons-material';
+import HouseIcon from '@mui/icons-material/House';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PaymentIcon from '@mui/icons-material/Payment';
 import BuildIcon from '@mui/icons-material/Build';
@@ -134,7 +135,7 @@ export default function Welcome() {
                 color: 'primary.main',
               }}
             >
-              <House className="size-6" />
+              <HouseIcon className="size-6" />
               <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                 PropertyPro
               </Typography>
@@ -267,7 +268,9 @@ export default function Welcome() {
                   desc: "Found an issue? Submit a maintenance request with photos directly through the portal and track its status from 'Pending' to 'Completed'. [1, 2, 5]",
                 },
                 {
-                  icon: <Notifications color="primary" sx={{ fontSize: 40 }} />,
+                  icon: (
+                    <NotificationsIcon color="primary" sx={{ fontSize: 40 }} />
+                  ),
                   title: 'Stay Informed',
                   desc: 'Receive important updates, announcements, and payment notifications directly from your landlord through the platform, ensuring clear communication. [1, 6]',
                 },
@@ -372,7 +375,7 @@ export default function Welcome() {
                   mb: 2,
                 }}
               >
-                <House className="size-6" />
+                <HouseIcon className="size-6" />
                 <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                   PropertyPro
                 </Typography>
