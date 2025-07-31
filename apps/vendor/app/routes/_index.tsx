@@ -44,7 +44,7 @@ export function meta() {
   ];
 }
 
-export default function VendorWelcome() {
+export default function Welcome() {
   const navigate = useNavigate();
   const { user } = useAuthStore();
   const [scrolled, setScrolled] = useState(false);
@@ -66,21 +66,24 @@ export default function VendorWelcome() {
       specialty: 'Plumbing Services',
       rating: 5,
       text: 'PropertyPro provides a steady stream of jobs. The communication with landlords is direct and simple, which saves me a ton of time.',
-      avatar: 'https://lh3.googleusercontent.com/a-/ALV-UjX_9gY-gBIVzFwOqQ-C-Q-Q',
+      avatar:
+        'https://lh3.googleusercontent.com/a-/ALV-UjX_9gY-gBIVzFwOqQ-C-Q-Q',
     },
     {
       name: 'Grace Adomako',
       specialty: 'Electrician',
       rating: 5,
-      text: "The best part is the payment system. As soon as a job is marked complete, the payment process starts. No more chasing invoices.",
-      avatar: 'https://lh3.googleusercontent.com/a-/ALV-UjY_1gY-gBIVzFwOqQ-C-Q-Q',
+      text: 'The best part is the payment system. As soon as a job is marked complete, the payment process starts. No more chasing invoices.',
+      avatar:
+        'https://lh3.googleusercontent.com/a-/ALV-UjY_1gY-gBIVzFwOqQ-C-Q-Q',
     },
     {
       name: 'Samuel Rodriguez',
       specialty: 'General Handyman',
       rating: 5,
-      text: "Managing my schedule has never been easier. I can see all my upcoming jobs in one place and plan my week effectively.",
-      avatar: 'https://lh3.googleusercontent.com/a-/ALV-UjZ_5gY-gBIVzFwOqQ-C-Q-Q',
+      text: 'Managing my schedule has never been easier. I can see all my upcoming jobs in one place and plan my week effectively.',
+      avatar:
+        'https://lh3.googleusercontent.com/a-/ALV-UjZ_5gY-gBIVzFwOqQ-C-Q-Q',
     },
   ];
 
@@ -153,7 +156,10 @@ export default function VendorWelcome() {
               <Button variant="text" onClick={() => smoothScroll('features')}>
                 Benefits
               </Button>
-              <Button variant="text" onClick={() => smoothScroll('testimonials')}>
+              <Button
+                variant="text"
+                onClick={() => smoothScroll('testimonials')}
+              >
                 Testimonials
               </Button>
               {user ? (
@@ -202,7 +208,8 @@ export default function VendorWelcome() {
               color="text.secondary"
               sx={{ maxWidth: '700px', mx: 'auto', mb: 4 }}
             >
-              Get notified about new maintenance jobs, manage your schedule, and track your payments—all in one place.
+              Get notified about new maintenance jobs, manage your schedule, and
+              track your payments—all in one place.
             </Typography>
             <Button
               variant="contained"
@@ -238,7 +245,8 @@ export default function VendorWelcome() {
               color="text.secondary"
               sx={{ textAlign: 'center', maxWidth: '600px', mx: 'auto', mb: 6 }}
             >
-              Our platform streamlines the entire maintenance process, from request to payment.
+              Our platform streamlines the entire maintenance process, from
+              request to payment.
             </Typography>
             <Grid container spacing={4}>
               {[
@@ -249,13 +257,18 @@ export default function VendorWelcome() {
                 },
                 {
                   icon: (
-                    <PlaylistAddCheckIcon color="primary" sx={{ fontSize: 40 }} />
+                    <PlaylistAddCheckIcon
+                      color="primary"
+                      sx={{ fontSize: 40 }}
+                    />
                   ),
                   title: 'Manage Jobs Easily',
                   desc: 'Respond to requests, provide quotes, and track the status of all your jobs from "Pending" to "Completed".',
                 },
                 {
-                  icon: <EventAvailableIcon color="primary" sx={{ fontSize: 40 }} />,
+                  icon: (
+                    <EventAvailableIcon color="primary" sx={{ fontSize: 40 }} />
+                  ),
                   title: 'Schedule with Confidence',
                   desc: 'A clear view of all scheduled jobs helps you organize your time and manage your workload efficiently.',
                 },
@@ -267,7 +280,7 @@ export default function VendorWelcome() {
                   desc: 'Once a job is complete, the platform facilitates the payment process, ensuring you get paid faster, without the hassle.',
                 },
               ].map((item, index) => (
-                <Grid size={{xs:12, sm:6, md:3}} key={index}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
                   <Card
                     elevation={0}
                     sx={{
@@ -307,8 +320,15 @@ export default function VendorWelcome() {
             </Typography>
             <Grid container spacing={3}>
               {testimonials.map((t, index) => (
-                <Grid size={{xs:12, md:4}} key={index}>
-                  <Card elevation={0} sx={{ height: '100%', borderRadius: 2, bgcolor: 'background.paper' }}>
+                <Grid size={{ xs: 12, md: 4 }} key={index}>
+                  <Card
+                    elevation={0}
+                    sx={{
+                      height: '100%',
+                      borderRadius: 2,
+                      bgcolor: 'background.paper',
+                    }}
+                  >
                     <CardHeader
                       avatar={<Avatar src={t.avatar} alt={t.name} />}
                       title={t.name}
@@ -350,7 +370,7 @@ export default function VendorWelcome() {
       >
         <Container maxWidth="lg">
           <Grid container spacing={4} justifyContent="space-between">
-            <Grid size={{xs:12, md:4}}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Box
                 sx={{
                   display: 'flex',
@@ -369,7 +389,7 @@ export default function VendorWelcome() {
                 The modern solution for rental property management.
               </Typography>
             </Grid>
-            <Grid size={{xs:6, md:2}}>
+            <Grid size={{ xs: 6, md: 2 }}>
               <Typography sx={{ fontWeight: 'bold', mb: 1 }}>
                 Platform
               </Typography>
@@ -392,7 +412,7 @@ export default function VendorWelcome() {
                 For Tenants
               </Link>
             </Grid>
-            <Grid size={{xs:12, md:2}}>
+            <Grid size={{ xs: 12, md: 2 }}>
               <Typography sx={{ fontWeight: 'bold', mb: 1 }}>
                 Company
               </Typography>
@@ -415,7 +435,7 @@ export default function VendorWelcome() {
                 Contact
               </Link>
             </Grid>
-            <Grid size={{xs:6, md:2}}>
+            <Grid size={{ xs: 6, md: 2 }}>
               <Typography sx={{ fontWeight: 'bold', mb: 1 }}>Legal</Typography>
               <Link
                 href="#"

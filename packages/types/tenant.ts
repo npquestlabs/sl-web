@@ -1,4 +1,4 @@
-import type { ApiData } from ".";
+import type { ApiData } from '.';
 
 export type TenantUser = {
   id: string;

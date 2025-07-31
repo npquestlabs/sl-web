@@ -14,9 +14,7 @@ export const getCurrentUser = () => {
   const { user } = useAuthStore.getState();
 
   if (!user) {
-    throw new Error(
-      'User not authenticated!',
-    );
+    throw new Error('User not authenticated!');
   }
 
   return user;

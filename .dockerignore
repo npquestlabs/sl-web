@@ -1,0 +1,39 @@
+# General ignores
+.git
+.gitignore
+*.md
+LICENSE
+.env
+.env.*
+
+# Docker specific ignores
+Dockerfile
+.dockerignore
+
+# Turborepo local cache
+.turbo
+
+# Local node_modules folders in the entire monorepo
+# This is crucial to avoid sending local dependencies to the build context
+**/node_modules
+
+# Local build outputs
+**/build
+**/dist
+**/.next
+**/.output
+
+# IDE and OS specific files
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# Test and configuration files that are not needed in production
+**/jest.config.js
+**/tsconfig.json
+
+# Specific to your old .dockerignore
+**/.react-router

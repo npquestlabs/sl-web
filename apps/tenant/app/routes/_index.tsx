@@ -64,22 +64,25 @@ export default function Welcome() {
       name: 'Aisha Mensah',
       date: '2023-11-10',
       rating: 5,
-      text: "Paying rent has never been easier. I love the automatic reminders and getting a receipt instantly.",
-      avatar: 'https://lh3.googleusercontent.com/a-/ALV-UjV_3gY-Gg-w-gBIVzFwOqQ-C-Q-Q',
+      text: 'Paying rent has never been easier. I love the automatic reminders and getting a receipt instantly.',
+      avatar:
+        'https://lh3.googleusercontent.com/a-/ALV-UjV_3gY-Gg-w-gBIVzFwOqQ-C-Q-Q',
     },
     {
       name: 'Ben Chen',
       date: '2023-10-22',
       rating: 5,
-      text: "I had a leaky faucet, reported it with a photo on the app, and it was scheduled for repair the next day. Incredibly efficient!",
-      avatar: 'https://lh3.googleusercontent.com/a-/ALV-UjW_8zX-gY-gBIVzFwOqQ-C-Q-Q',
+      text: 'I had a leaky faucet, reported it with a photo on the app, and it was scheduled for repair the next day. Incredibly efficient!',
+      avatar:
+        'https://lh3.googleusercontent.com/a-/ALV-UjW_8zX-gY-gBIVzFwOqQ-C-Q-Q',
     },
     {
       name: 'Chloe Williams',
       date: '2023-09-15',
       rating: 5,
       text: "It's great to have my lease agreement accessible anytime. No more digging through old emails.",
-      avatar: 'https://lh3.googleusercontent.com/a-/ALV-UjU_7gY-gBIVzFwOqQ-C-Q-Q',
+      avatar:
+        'https://lh3.googleusercontent.com/a-/ALV-UjU_7gY-gBIVzFwOqQ-C-Q-Q',
     },
   ];
 
@@ -152,7 +155,10 @@ export default function Welcome() {
               <Button variant="text" onClick={() => smoothScroll('features')}>
                 Features
               </Button>
-              <Button variant="text" onClick={() => smoothScroll('testimonials')}>
+              <Button
+                variant="text"
+                onClick={() => smoothScroll('testimonials')}
+              >
                 Testimonials
               </Button>
               {user ? (
@@ -201,7 +207,8 @@ export default function Welcome() {
               color="text.secondary"
               sx={{ maxWidth: '700px', mx: 'auto', mb: 4 }}
             >
-              A single, secure portal to pay rent, view your lease, and report maintenance issues. Welcome to a better renting experience.
+              A single, secure portal to pay rent, view your lease, and report
+              maintenance issues. Welcome to a better renting experience.
             </Typography>
             <Button
               variant="contained"
@@ -237,7 +244,8 @@ export default function Welcome() {
               color="text.secondary"
               sx={{ textAlign: 'center', maxWidth: '600px', mx: 'auto', mb: 6 }}
             >
-              Our platform is designed to make your life easier, with all your rental needs in one place.
+              Our platform is designed to make your life easier, with all your
+              rental needs in one place.
             </Typography>
             <Grid container spacing={4}>
               {[
@@ -259,14 +267,12 @@ export default function Welcome() {
                   desc: "Found an issue? Submit a maintenance request with photos directly through the portal and track its status from 'Pending' to 'Completed'. [1, 2, 5]",
                 },
                 {
-                  icon: (
-                    <Notifications color="primary" sx={{ fontSize: 40 }} />
-                  ),
+                  icon: <Notifications color="primary" sx={{ fontSize: 40 }} />,
                   title: 'Stay Informed',
                   desc: 'Receive important updates, announcements, and payment notifications directly from your landlord through the platform, ensuring clear communication. [1, 6]',
                 },
               ].map((item, index) => (
-                <Grid size={{xs:12, sm:6, md:3}} key={index}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
                   <Card
                     elevation={0}
                     sx={{
@@ -306,8 +312,15 @@ export default function Welcome() {
             </Typography>
             <Grid container spacing={3}>
               {testimonials.map((t, index) => (
-                <Grid size={{xs:12, md:4}} key={index}>
-                  <Card elevation={0} sx={{ height: '100%', borderRadius: 2, bgcolor: 'background.paper' }}>
+                <Grid size={{ xs: 12, md: 4 }} key={index}>
+                  <Card
+                    elevation={0}
+                    sx={{
+                      height: '100%',
+                      borderRadius: 2,
+                      bgcolor: 'background.paper',
+                    }}
+                  >
                     <CardHeader
                       avatar={<Avatar src={t.avatar} alt={t.name} />}
                       title={t.name}
@@ -349,7 +362,7 @@ export default function Welcome() {
       >
         <Container maxWidth="lg">
           <Grid container spacing={4} justifyContent="space-between">
-            <Grid size={{xs:12, md:4}}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Box
                 sx={{
                   display: 'flex',
@@ -368,7 +381,7 @@ export default function Welcome() {
                 The modern solution for rental property management.
               </Typography>
             </Grid>
-            <Grid size={{xs:6, md:2}}>
+            <Grid size={{ xs: 6, md: 2 }}>
               <Typography sx={{ fontWeight: 'bold', mb: 1 }}>
                 Product
               </Typography>
@@ -391,7 +404,7 @@ export default function Welcome() {
                 Security
               </Link>
             </Grid>
-            <Grid size={{xs:12, md:2}}>
+            <Grid size={{ xs: 12, md: 2 }}>
               <Typography sx={{ fontWeight: 'bold', mb: 1 }}>
                 Company
               </Typography>
@@ -414,7 +427,7 @@ export default function Welcome() {
                 Contact
               </Link>
             </Grid>
-            <Grid size={{xs:6, md:2}}>
+            <Grid size={{ xs: 6, md: 2 }}>
               <Typography sx={{ fontWeight: 'bold', mb: 1 }}>Legal</Typography>
               <Link
                 href="#"

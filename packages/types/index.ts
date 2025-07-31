@@ -1,6 +1,6 @@
-export * from "./landlord";
-export * from "./tenant";
-export * from "./vendor";
+export * from './landlord';
+export * from './tenant';
+export * from './vendor';
 
 export type ApiData = {
   id: string;
@@ -102,10 +102,10 @@ export type MaintenanceRequest = {
 export type ActivityItem = {
   id: string;
   type:
-  | 'lease_signed'
-  | 'payment_received'
-  | 'maintenance_created'
-  | 'maintenance_completed';
+    | 'lease_signed'
+    | 'payment_received'
+    | 'maintenance_created'
+    | 'maintenance_completed';
   title: string;
   description: string;
   date: string;

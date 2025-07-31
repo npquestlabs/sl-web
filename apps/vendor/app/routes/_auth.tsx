@@ -49,29 +49,29 @@ export default function AuthLayout() {
           <Grid size={{ xs: 12, md: 6 }}>
             <Stack sx={{ p: { xs: 4, md: 5 }, height: '100%' }}>
               <Link to="/">
-              <Stack
-                alignItems="center"
-                spacing={1.5}
-                sx={{ cursor: 'pointer', mb: 4 }}
-              >
-                <Avatar
-                  sx={{
-                    bgcolor: 'primary.main',
-                    width: 64,
-                    height: 64,
-                  }}
+                <Stack
+                  alignItems="center"
+                  spacing={1.5}
+                  sx={{ cursor: 'pointer', mb: 4 }}
                 >
-                  <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>
-                    P
+                  <Avatar
+                    sx={{
+                      bgcolor: 'primary.main',
+                      width: 64,
+                      height: 64,
+                    }}
+                  >
+                    <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>
+                      P
+                    </Typography>
+                  </Avatar>
+                  <Typography
+                    variant="h5"
+                    sx={{ fontWeight: 'bold', color: 'primary.main' }}
+                  >
+                    PropertyPro
                   </Typography>
-                </Avatar>
-                <Typography
-                  variant="h5"
-                  sx={{ fontWeight: 'bold', color: 'primary.main' }}
-                >
-                  PropertyPro
-                </Typography>
-              </Stack>
+                </Stack>
               </Link>
               <Stack
                 direction={{ xs: 'column', sm: 'row' }}
