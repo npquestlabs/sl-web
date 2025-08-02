@@ -14,7 +14,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import BuildIcon from '@mui/icons-material/Build';
 
-import { type SummaryStats } from '@repo/types';
+import { type StaffSummary } from '@repo/types';
 import { httpService } from '@repo/api/httpService';
 import { getCurrentUser } from '~/store/auth';
 import { toast } from 'sonner';
@@ -35,10 +35,10 @@ export default function DashboardPage() {
     isLoading,
     isError,
     error,
-  } = useQuery<SummaryStats>({
+  } = useQuery<StaffSummary>({
     queryKey: ['dashboardStats'],
     queryFn: async () => {
-      const result = await httpService.get<SummaryStats>('/staff/summary');
+      const result = await httpService.get<StaffSummary>('/staff/summary');
       if (result.error) {
         throw new Error(result.error);
       }
@@ -56,19 +56,19 @@ export default function DashboardPage() {
     ? [
         {
           title: 'Total Complexes',
-          value: stats.complexes,
+          value: stats.totalComplexes,
           icon: iconMap.complexes,
         },
-        { title: 'Total Units', value: stats.units, icon: iconMap.units },
-        { title: 'Active Leases', value: stats.tenants, icon: iconMap.tenants },
+        { title: 'Total Units', value: stats.totalUnits, icon: iconMap.units },
+        { title: 'Active Leases', value: stats.activeTenants, icon: iconMap.tenants },
         {
           title: 'Upcoming Payments',
-          value: stats.payments,
+          value: stats.unitsWithExpiredLeases,
           icon: iconMap.payments,
         },
         {
           title: 'Pending Maintenance',
-          value: stats.maintenanceRequests,
+          value: stats.pendingMaintenanceRequests,
           icon: iconMap.maintenanceRequests,
         },
       ]

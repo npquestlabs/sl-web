@@ -179,13 +179,13 @@ export type MessageResponse = {
   message: string;
 };
 
-export type SummaryStats = {
-  complexes: number;
-  units: number;
-  tenants: number;
-  payments: number;
-  maintenanceRequests: number;
-};
+export type StaffSummary = {
+  totalComplexes: number
+  totalUnits: number
+  activeTenants: number
+  unitsWithExpiredLeases: number
+  pendingMaintenanceRequests: number
+}
 
 export type Paginated<T> = {
   data: T[];
