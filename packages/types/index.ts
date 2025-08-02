@@ -1,4 +1,4 @@
-export * from './landlord';
+export * from './staff';
 export * from './tenant';
 export * from './vendor';
 
@@ -162,7 +162,7 @@ export type RegisterUserSchema = {
   phone?: string;
   email: string;
   password: string;
-  landlord: object;
+  staff: object;
 };
 
 export type RegisterStageOneRequest = {
@@ -195,3 +195,68 @@ export type Paginated<T> = {
     total: number;
   };
 };
+
+
+export enum IdType {
+  VOTER_ID = "VOTER_ID",
+  PASSPORT = "PASSPORT",
+  DRIVER_LICENSE = "DRIVER_LICENSE",
+  GH_CARD = "GH_CARD"
+}
+
+export enum InvoiceStatus {
+  PENDING = "PENDING",
+  PAID = "PAID",
+  OVERDUE = "OVERDUE",
+  CANCELED = "CANCELED"
+};
+
+export enum StaffRole {
+  SUPERADMIN = "SUPERADMIN",
+  ADMIN = "ADMIN",
+  REGULAR = "REGULAR"
+}
+
+export enum LeaseStatus {
+  ACTIVE = "ACTIVE",
+  PENDING = "PENDING",
+  TERMINATED = "TERMINATED",
+  EXPIRED = "EXPIRED",
+  RENEWED = "RENEWED"
+}
+
+export enum MaintenanceStatus {
+  PENDING = "PENDING",
+  SCHEDULED = "SCHEDULED",
+  IN_PROGRESS = "IN_PROGRESS",
+  COMPLETED = "COMPLETED",
+  CANCELED = "CANCELED"
+}
+
+export enum PaymentMethod {
+  MOBILE_MONEY = "MOBILE_MONEY",
+  BANK_TRANSFER = "BANK_TRANSFER",
+  CARD = "CARD",
+  CASH = "CASH"
+}
+
+export enum PaymentStatus {
+  PENDING = "PENDING",
+  COMPLETED = "COMPLETED",
+  FAILED = "FAILED",
+  REFUNDED = "REFUNDED"
+}
+
+export enum PaymentType {
+  RENT = "RENT",
+  UTILITY = "UTILITY",
+  MAINTENANCE = "MAINTENANCE",
+  DEPOSIT = "DEPOSIT"
+}
+
+export enum UnitType {
+  ROOM = "ROOM",
+  STUDIO = "STUDIO",
+  APARTMENT = "APARTMENT",
+  HOUSE = "HOUSE"
+}

@@ -65,7 +65,7 @@ export default function Welcome() {
       name: 'David Lee',
       specialty: 'Plumbing Services',
       rating: 5,
-      text: 'PropertyPro provides a steady stream of jobs. The communication with landlords is direct and simple, which saves me a ton of time.',
+      text: 'PropertyPro provides a steady stream of jobs. The communication with staffs is direct and simple, which saves me a ton of time.',
       avatar:
         'https://lh3.googleusercontent.com/a-/ALV-UjX_9gY-gBIVzFwOqQ-C-Q-Q',
     },
@@ -253,7 +253,7 @@ export default function Welcome() {
                 {
                   icon: <HandymanIcon color="primary" sx={{ fontSize: 40 }} />,
                   title: 'Receive Job Requests',
-                  desc: 'Get instant notifications for maintenance requests from landlords that match your specialty.',
+                  desc: 'Get instant notifications for maintenance requests from staffs that match your specialty.',
                 },
                 {
                   icon: (
@@ -394,13 +394,13 @@ export default function Welcome() {
                 Platform
               </Typography>
               <Link
-                href="/landlords"
+                href="/staff"
                 color="text.secondary"
                 display="block"
                 underline="hover"
                 sx={{ mb: 0.5 }}
               >
-                For Landlords
+                For Property Managers
               </Link>
               <Link
                 href="/tenants"

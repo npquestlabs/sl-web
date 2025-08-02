@@ -1,6 +1,6 @@
 import type { ApiData } from '.';
 
-export type LandlordUser = {
+export type StaffUser = {
   id: string;
   firstName: string;
   lastName: string;

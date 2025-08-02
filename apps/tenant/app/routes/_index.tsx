@@ -104,7 +104,7 @@ export default function Welcome() {
         fontFamily: 'Public Sans, Noto Sans, sans-serif',
       }}
     >
-      {/* Header (Consistent with Landlord Page) */}
+      
       <AppBar
         position="sticky"
         elevation={scrolled ? 2 : 0}
@@ -272,7 +272,7 @@ export default function Welcome() {
                     <NotificationsIcon color="primary" sx={{ fontSize: 40 }} />
                   ),
                   title: 'Stay Informed',
-                  desc: 'Receive important updates, announcements, and payment notifications directly from your landlord through the platform, ensuring clear communication. [1, 6]',
+                  desc: 'Receive important updates, announcements, and payment notifications directly from your staff through the platform, ensuring clear communication. [1, 6]',
                 },
               ].map((item, index) => (
                 <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
@@ -353,7 +353,6 @@ export default function Welcome() {
         </Box>
       </Box>
 
-      {/* Footer (Consistent with Landlord Page) */}
       <Box
         component="footer"
         sx={{

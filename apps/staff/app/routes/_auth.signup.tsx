@@ -37,7 +37,7 @@ export default function Signup() {
     e.preventDefault();
     setLoading(true);
     try {
-      const user = { email, password, landlord: { firstName, lastName } };
+      const user = { email, password, staff: { firstName, lastName } };
       const result = await httpService.post<MessageResponse>(
         '/auth/register/stage-one',
         { email, user },
@@ -55,7 +55,7 @@ export default function Signup() {
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const user = { email, password, landlord: { firstName, lastName } };
+    const user = { email, password, staff: { firstName, lastName } };
     try {
       const result = await httpService.post<MessageResponse>(
         '/auth/register/stage-two',

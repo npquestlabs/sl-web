@@ -38,7 +38,7 @@ export default function DashboardPage() {
   } = useQuery<SummaryStats>({
     queryKey: ['dashboardStats'],
     queryFn: async () => {
-      const result = await httpService.get<SummaryStats>('/landlords/summary');
+      const result = await httpService.get<SummaryStats>('/staff/summary');
       if (result.error) {
         throw new Error(result.error);
       }

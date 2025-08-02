@@ -196,7 +196,7 @@ export default function Welcome() {
             transition={{ duration: 0.8 }}
           >
             <Chip
-              label="Automation & Collaboration for Modern Landlords"
+              label="Automation & Collaboration for Modern Landlords & Property Managers"
               color="primary"
               variant="outlined"
               sx={{ mb: 3 }}
@@ -321,7 +321,7 @@ export default function Welcome() {
               color="text.secondary"
               sx={{ textAlign: 'center', maxWidth: '600px', mx: 'auto', mb: 6 }}
             >
-              PropertyPro connects landlords, tenants, and vendors on a single,
+              PropertyPro connects staffs, tenants, and vendors on a single,
               easy-to-use platform, creating a transparent and efficient
               ecosystem.
             </Typography>
@@ -334,7 +334,7 @@ export default function Welcome() {
                       sx={{ fontSize: 40 }}
                     />
                   ),
-                  role: 'For Landlords',
+                  role: 'For Property Managers',
                   desc: 'Complete oversight of your finances, properties, and people. Reduce manual work and maximize your returns.',
                 },
                 {
@@ -384,7 +384,7 @@ export default function Welcome() {
                 mb: 6,
               }}
             >
-              Loved by Landlords Everywhere
+              Loved by Property Managers Everywhere
             </Typography>
             <Grid container spacing={3}>
               {testimonials.map((t, index) => (
