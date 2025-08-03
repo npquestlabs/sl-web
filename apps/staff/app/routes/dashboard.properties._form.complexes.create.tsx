@@ -122,7 +122,7 @@ export default function CreateComplexPage() {
             )}
           />
         </Grid>
-        <Grid size={{xs: 12}}>
+        <Grid size={{ xs: 12 }}>
           <Controller
             name="description"
             control={control}
@@ -139,7 +139,7 @@ export default function CreateComplexPage() {
             )}
           />
         </Grid>
-        <Grid size={{xs:12}}>
+        <Grid size={{ xs: 12 }}>
           <Controller
             name="notes"
             control={control}
@@ -156,7 +156,7 @@ export default function CreateComplexPage() {
             )}
           />
         </Grid>
-        <Grid size={{xs:12}}>
+        <Grid size={{ xs: 12 }}>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
             <LoadingButton
               type="submit"

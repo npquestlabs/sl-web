@@ -25,7 +25,11 @@ import type { ListedComplex } from '~/types';
 import { httpService } from '@repo/api/httpService';
 import type { Paginated } from '@repo/types';
 import { useDebounce } from '@repo/hooks/useDebounce';
-import { parseAsString, parseAsInteger, useQueryState } from '@repo/hooks/useQueryState';
+import {
+  parseAsString,
+  parseAsInteger,
+  useQueryState,
+} from '@repo/hooks/useQueryState';
 import type { RouteHandle } from './dashboard.properties';
 
 // Add the breadcrumb handle for consistency
@@ -37,13 +41,19 @@ export default function ComplexesListPage() {
   const navigate = useNavigate();
 
   // --- State Management: Use the new hooks, mirroring the Units file ---
-  const [search, setSearch] = useQueryState<string | null>('search', parseAsString);
+  const [search, setSearch] = useQueryState<string | null>(
+    'search',
+    parseAsString,
+  );
   const debouncedSearch = useDebounce(search, 300);
 
   const [page, setPage] = useQueryState<number | null>('page', parseAsInteger);
   const debouncedPage = useDebounce(page ?? 1, 300);
 
-  const [limit, setLimit] = useQueryState<number | null>('pageSize', parseAsInteger);
+  const [limit, setLimit] = useQueryState<number | null>(
+    'pageSize',
+    parseAsInteger,
+  );
   const debouncedLimit = useDebounce(limit ?? 10, 300);
 
   // --- Data Fetching: Simplified queryKey and queryFn ---
@@ -53,7 +63,13 @@ export default function ComplexesListPage() {
     isError,
     error,
   } = useQuery<Paginated<ListedComplex>>({
-    queryKey: ['complexes', 'list', debouncedSearch, debouncedPage, debouncedLimit],
+    queryKey: [
+      'complexes',
+      'list',
+      debouncedSearch,
+      debouncedPage,
+      debouncedLimit,
+    ],
     queryFn: async () => {
       const result = await httpService.get<Paginated<ListedComplex>>(
         '/complexes',
@@ -110,7 +126,8 @@ export default function ComplexesListPage() {
           placeholder="Search by name, address, or city..."
           variant="outlined"
           size="small"
-          InputProps={{ // Corrected usage of InputProps
+          InputProps={{
+            // Corrected usage of InputProps
             startAdornment: (
               <InputAdornment position="start">
                 <SearchIcon />
@@ -119,7 +136,11 @@ export default function ComplexesListPage() {
           }}
           sx={{ width: { xs: '100%', sm: '320px' } }}
         />
-        <Button component={Link} variant="contained" to="/dashboard/properties/complexes/create">
+        <Button
+          component={Link}
+          variant="contained"
+          to="/dashboard/properties/complexes/create"
+        >
           Add Complex
         </Button>
       </Box>

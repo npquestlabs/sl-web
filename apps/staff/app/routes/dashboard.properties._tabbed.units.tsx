@@ -26,7 +26,11 @@ import { httpService } from '@repo/api/httpService';
 import type { Paginated } from '@repo/types';
 import type { RouteHandle } from './dashboard.properties';
 import { useDebounce } from '@repo/hooks/useDebounce';
-import { parseAsString, parseAsInteger, useQueryState } from '@repo/hooks/useQueryState';
+import {
+  parseAsString,
+  parseAsInteger,
+  useQueryState,
+} from '@repo/hooks/useQueryState';
 
 export const handle: RouteHandle = {
   breadcrumb: () => [{ title: 'Units' }],
@@ -35,13 +39,19 @@ export const handle: RouteHandle = {
 export default function UnitsListPage() {
   const navigate = useNavigate();
 
-  const [search, setSearch] = useQueryState<string | null>('search', parseAsString);
+  const [search, setSearch] = useQueryState<string | null>(
+    'search',
+    parseAsString,
+  );
   const debouncedSearch = useDebounce(search, 300);
 
   const [page, setPage] = useQueryState<number | null>('page', parseAsInteger);
   const debouncedPage = useDebounce(page ?? 1, 300);
 
-  const [limit, setLimit] = useQueryState<number | null>('pageSize', parseAsInteger);
+  const [limit, setLimit] = useQueryState<number | null>(
+    'pageSize',
+    parseAsInteger,
+  );
   const debouncedLimit = useDebounce(limit ?? 10, 300);
 
   const {
@@ -125,7 +135,11 @@ export default function UnitsListPage() {
           }}
           sx={{ width: { xs: '100%', sm: '320px' } }}
         />
-        <Button component={Link} variant="contained" to="/dashboard/properties/units/create">
+        <Button
+          component={Link}
+          variant="contained"
+          to="/dashboard/properties/units/create"
+        >
           Add Unit
         </Button>
       </Box>
@@ -144,85 +158,87 @@ export default function UnitsListPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {isLoading
-                ? Array.from(new Array(limit)).map((_, index) => (
-                    <TableRow key={index}>
-                      <TableCell colSpan={6}>
-                        <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-                      </TableCell>
-                    </TableRow>
-                  ))
-                : isError
-                ? <TableRow>
-                    <TableCell colSpan={6} align="center">
-                      <Typography color="error">
-                        Error loading units. Please try again later.
-                      </Typography>
+              {isLoading ? (
+                Array.from(new Array(limit)).map((_, index) => (
+                  <TableRow key={index}>
+                    <TableCell colSpan={6}>
+                      <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
                     </TableCell>
                   </TableRow>
-                : response?.data.length === 0
-                ? <TableRow>
-                    <TableCell colSpan={6} align="center">
-                      <Typography color="text.secondary">
-                        No units found.
+                ))
+              ) : isError ? (
+                <TableRow>
+                  <TableCell colSpan={6} align="center">
+                    <Typography color="error">
+                      Error loading units. Please try again later.
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ) : response?.data.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} align="center">
+                    <Typography color="text.secondary">
+                      No units found.
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                response?.data.map((unit) => (
+                  <TableRow
+                    hover
+                    key={unit.id}
+                    onClick={() =>
+                      navigate(`/dashboard/properties/units/${unit.id}`)
+                    }
+                    sx={{ cursor: 'pointer' }}
+                  >
+                    <TableCell>
+                      <Typography variant="subtitle2" color="text.primary">
+                        {unit.label}
                       </Typography>
                     </TableCell>
+                    <TableCell>
+                      <Typography
+                        component={NavLink}
+                        to={`/dashboard/properties/complexes/${unit.complex.id}`}
+                        onClick={(e) => e.stopPropagation()} // Prevent row click
+                        variant="body2"
+                        sx={{
+                          color: 'text.secondary',
+                          textDecoration: 'none',
+                          '&:hover': { textDecoration: 'underline' },
+                        }}
+                      >
+                        {unit.complex.name}
+                      </Typography>
+                    </TableCell>
+                    <TableCell sx={{ color: 'text.secondary' }}>
+                      {unit.type || 'N/A'}
+                    </TableCell>
+                    <TableCell sx={{ color: 'text.secondary' }}>
+                      {unit.rentAmount
+                        ? `${unit.rentCurrency} ${Number(
+                            unit.rentAmount,
+                          ).toLocaleString()}`
+                        : 'N/A'}
+                    </TableCell>
+                    <TableCell>
+                      {getLeaseStatusChip(unit.leaseStatus)}
+                    </TableCell>
+                    <TableCell align="center">
+                      {unit._count.maintenanceRequests > 0 ? (
+                        <Chip
+                          label={unit._count.maintenanceRequests}
+                          color="warning"
+                          size="small"
+                        />
+                      ) : (
+                        '0'
+                      )}
+                    </TableCell>
                   </TableRow>
-                : response?.data.map((unit) => (
-                    <TableRow
-                      hover
-                      key={unit.id}
-                      onClick={() =>
-                        navigate(`/dashboard/properties/units/${unit.id}`)
-                      }
-                      sx={{ cursor: 'pointer' }}
-                    >
-                      <TableCell>
-                        <Typography variant="subtitle2" color="text.primary">
-                          {unit.label}
-                        </Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography
-                          component={NavLink}
-                          to={`/dashboard/properties/complexes/${unit.complex.id}`}
-                          onClick={(e) => e.stopPropagation()} // Prevent row click
-                          variant="body2"
-                          sx={{
-                            color: 'text.secondary',
-                            textDecoration: 'none',
-                            '&:hover': { textDecoration: 'underline' },
-                          }}
-                        >
-                          {unit.complex.name}
-                        </Typography>
-                      </TableCell>
-                      <TableCell sx={{ color: 'text.secondary' }}>
-                        {unit.type || 'N/A'}
-                      </TableCell>
-                      <TableCell sx={{ color: 'text.secondary' }}>
-                        {unit.rentAmount
-                          ? `${unit.rentCurrency} ${Number(
-                              unit.rentAmount,
-                            ).toLocaleString()}`
-                          : 'N/A'}
-                      </TableCell>
-                      <TableCell>
-                        {getLeaseStatusChip(unit.leaseStatus)}
-                      </TableCell>
-                      <TableCell align="center">
-                        {unit._count.maintenanceRequests > 0 ? (
-                          <Chip
-                            label={unit._count.maintenanceRequests}
-                            color="warning"
-                            size="small"
-                          />
-                        ) : (
-                          '0'
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                ))
+              )}
             </TableBody>
           </Table>
         </TableContainer>

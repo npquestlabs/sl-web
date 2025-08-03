@@ -12,7 +12,6 @@ import {
   Button,
   Chip,
   Divider,
-  Grid,
   IconButton,
   List,
   ListItem,
@@ -73,10 +72,8 @@ export async function clientLoader({ params }: ClientLoaderFunctionArgs) {
   return complex;
 }
 
-export const handle: RouteHandle = {
-  breadcrumb: (match) => [
-    { title: match.data?.name || 'Complex Details' },
-  ],
+export const handle: RouteHandle<DetailedComplex> = {
+  breadcrumb: (match) => [{ title: match.data?.name || 'Complex Details' }],
 };
 
 export default function ComplexDetailsPage() {

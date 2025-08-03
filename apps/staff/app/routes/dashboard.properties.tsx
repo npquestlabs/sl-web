@@ -14,8 +14,8 @@ export interface CrumbData {
   to?: string;
 }
 
-export interface RouteHandle {
-  breadcrumb?: (match: UIMatch<unknown, unknown>) => CrumbData[];
+export interface RouteHandle<T = unknown> {
+  breadcrumb?: (match: UIMatch<T, unknown>) => CrumbData[];
 }
 
 export const handle: RouteHandle = {

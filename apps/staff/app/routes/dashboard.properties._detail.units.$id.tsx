@@ -72,7 +72,7 @@ export async function clientLoader({ params }: ClientLoaderFunctionArgs) {
   return unit;
 }
 
-export const handle: RouteHandle = {
+export const handle: RouteHandle<DetailedUnit> = {
   breadcrumb: (match) => {
     const unit = match.data as DetailedUnit;
     if (!unit) return [{ title: 'Details' }];

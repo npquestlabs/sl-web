@@ -60,7 +60,11 @@ export default function DashboardPage() {
           icon: iconMap.complexes,
         },
         { title: 'Total Units', value: stats.totalUnits, icon: iconMap.units },
-        { title: 'Active Leases', value: stats.activeTenants, icon: iconMap.tenants },
+        {
+          title: 'Active Leases',
+          value: stats.activeTenants,
+          icon: iconMap.tenants,
+        },
         {
           title: 'Upcoming Payments',
           value: stats.unitsWithExpiredLeases,

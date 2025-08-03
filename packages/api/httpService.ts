@@ -14,8 +14,7 @@ const REFRESH_TOKEN_KEY =
 const API_BASE_URL =
   import.meta.env?.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
 
-const CONSOLE_NAME =
-  import.meta.env?.VITE_CONSOLE_NAME || 'not-set';
+const CONSOLE_NAME = import.meta.env?.VITE_CONSOLE_NAME || 'not-set';
 
 class HttpService {
   private api: AxiosInstance;

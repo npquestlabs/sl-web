@@ -19,7 +19,7 @@ import { toast } from 'sonner';
 import { httpService } from '@repo/api/httpService';
 import { CreateUnitSchema } from '@repo/utils/schemas';
 import type { ListedComplex } from '~/types';
-import { UnitType, type Paginated } from '@repo/types';
+import { type MessageResponse, UnitType, type Paginated } from '@repo/types';
 import { useDebounce } from '@repo/hooks/useDebounce';
 
 const FormUnitSchema = CreateUnitSchema.extend({
@@ -75,9 +75,16 @@ export default function CreateUnitPage() {
   });
 
   const mutation = useMutation({
-    mutationFn: (formData: CreateUnitFormInputs) => {
+    mutationFn: async (formData: CreateUnitFormInputs) => {
       const { complexId, ...payload } = formData;
-      return httpService.post(`/complexes/${complexId}/units`, payload);
+      const result = await httpService.post<MessageResponse>(
+        `/complexes/${complexId}/units`,
+        payload,
+      );
+      if (result.error) {
+        throw new Error(result.error);
+      }
+      return result;
     },
     onSuccess: async () => {
       toast.success('Unit created successfully!');

@@ -180,12 +180,12 @@ export type MessageResponse = {
 };
 
 export type StaffSummary = {
-  totalComplexes: number
-  totalUnits: number
-  activeTenants: number
-  unitsWithExpiredLeases: number
-  pendingMaintenanceRequests: number
-}
+  totalComplexes: number;
+  totalUnits: number;
+  activeTenants: number;
+  unitsWithExpiredLeases: number;
+  pendingMaintenanceRequests: number;
+};
 
 export type Paginated<T> = {
   data: T[];
@@ -196,67 +196,66 @@ export type Paginated<T> = {
   };
 };
 
-
 export enum IdType {
-  VOTER_ID = "VOTER_ID",
-  PASSPORT = "PASSPORT",
-  DRIVER_LICENSE = "DRIVER_LICENSE",
-  GH_CARD = "GH_CARD"
+  VOTER_ID = 'VOTER_ID',
+  PASSPORT = 'PASSPORT',
+  DRIVER_LICENSE = 'DRIVER_LICENSE',
+  GH_CARD = 'GH_CARD',
 }
 
 export enum InvoiceStatus {
-  PENDING = "PENDING",
-  PAID = "PAID",
-  OVERDUE = "OVERDUE",
-  CANCELED = "CANCELED"
-};
+  PENDING = 'PENDING',
+  PAID = 'PAID',
+  OVERDUE = 'OVERDUE',
+  CANCELED = 'CANCELED',
+}
 
 export enum StaffRole {
-  SUPERADMIN = "SUPERADMIN",
-  ADMIN = "ADMIN",
-  REGULAR = "REGULAR"
+  SUPERADMIN = 'SUPERADMIN',
+  ADMIN = 'ADMIN',
+  REGULAR = 'REGULAR',
 }
 
 export enum LeaseStatus {
-  ACTIVE = "ACTIVE",
-  PENDING = "PENDING",
-  TERMINATED = "TERMINATED",
-  EXPIRED = "EXPIRED",
-  RENEWED = "RENEWED"
+  ACTIVE = 'ACTIVE',
+  PENDING = 'PENDING',
+  TERMINATED = 'TERMINATED',
+  EXPIRED = 'EXPIRED',
+  RENEWED = 'RENEWED',
 }
 
 export enum MaintenanceStatus {
-  PENDING = "PENDING",
-  SCHEDULED = "SCHEDULED",
-  IN_PROGRESS = "IN_PROGRESS",
-  COMPLETED = "COMPLETED",
-  CANCELED = "CANCELED"
+  PENDING = 'PENDING',
+  SCHEDULED = 'SCHEDULED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED = 'COMPLETED',
+  CANCELED = 'CANCELED',
 }
 
 export enum PaymentMethod {
-  MOBILE_MONEY = "MOBILE_MONEY",
-  BANK_TRANSFER = "BANK_TRANSFER",
-  CARD = "CARD",
-  CASH = "CASH"
+  MOBILE_MONEY = 'MOBILE_MONEY',
+  BANK_TRANSFER = 'BANK_TRANSFER',
+  CARD = 'CARD',
+  CASH = 'CASH',
 }
 
 export enum PaymentStatus {
-  PENDING = "PENDING",
-  COMPLETED = "COMPLETED",
-  FAILED = "FAILED",
-  REFUNDED = "REFUNDED"
+  PENDING = 'PENDING',
+  COMPLETED = 'COMPLETED',
+  FAILED = 'FAILED',
+  REFUNDED = 'REFUNDED',
 }
 
 export enum PaymentType {
-  RENT = "RENT",
-  UTILITY = "UTILITY",
-  MAINTENANCE = "MAINTENANCE",
-  DEPOSIT = "DEPOSIT"
+  RENT = 'RENT',
+  UTILITY = 'UTILITY',
+  MAINTENANCE = 'MAINTENANCE',
+  DEPOSIT = 'DEPOSIT',
 }
 
 export enum UnitType {
-  ROOM = "ROOM",
-  STUDIO = "STUDIO",
-  APARTMENT = "APARTMENT",
-  HOUSE = "HOUSE"
+  ROOM = 'ROOM',
+  STUDIO = 'STUDIO',
+  APARTMENT = 'APARTMENT',
+  HOUSE = 'HOUSE',
 }

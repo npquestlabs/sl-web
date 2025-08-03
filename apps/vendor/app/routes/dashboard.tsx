@@ -1,11 +1,7 @@
 import { Box, CircularProgress, useTheme } from '@mui/material';
 import { httpService } from '@repo/api/httpService';
 import { useEffect } from 'react';
-import {
-  Outlet,
-  redirect,
-  useNavigate,
-} from 'react-router';
+import { Outlet, redirect, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { Header } from '~/components/header';
 import { useAuthStore } from '~/store/auth';

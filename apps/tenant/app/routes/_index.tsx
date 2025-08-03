@@ -104,7 +104,6 @@ export default function Welcome() {
         fontFamily: 'Public Sans, Noto Sans, sans-serif',
       }}
     >
-      
       <AppBar
         position="sticky"
         elevation={scrolled ? 2 : 0}

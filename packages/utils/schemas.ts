@@ -33,16 +33,15 @@ export const CreateComplexSchema = z.object({
     .min(1, 'Notes are required')
     .max(500, 'Notes must be less than 500 characters')
     .optional(),
-})
-
+});
 
 export const CreateUnitSchema = z.object({
   type: z.enum(UnitType),
-  label: z.string().optional().default(''),
+  label: z.string(),
   description: z.string().optional(),
   notes: z.string().optional(),
   rentAmount: z.number().optional(),
   rentCurrency: z.string().optional(),
   rentAdvance: z.number().optional(),
   rentDuration: z.number().optional(),
-})
+});
