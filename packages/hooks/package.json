@@ -1,5 +1,5 @@
 {
-  "name": "@repo/utils",
+  "name": "@repo/hooks",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
@@ -7,7 +7,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@mui/material": "*",
-    "zod": "^4.0.14"
+    
   }
 }

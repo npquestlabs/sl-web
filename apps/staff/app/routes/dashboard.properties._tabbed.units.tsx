@@ -1,15 +1,12 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useSearchParams, NavLink } from 'react-router';
+import React from 'react';
+import { useNavigate, NavLink, Link } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import {
   Box,
   Button,
-  Card,
   Chip,
-  IconButton,
   InputAdornment,
-  Menu,
-  MenuItem,
+  Paper,
   Skeleton,
   Table,
   TableBody,
@@ -22,81 +19,45 @@ import {
   Typography,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { toast } from 'sonner';
 
 import type { ListedUnit } from '~/types';
 import { httpService } from '@repo/api/httpService';
+import type { Paginated } from '@repo/types';
+import type { RouteHandle } from './dashboard.properties';
+import { useDebounce } from '@repo/hooks/useDebounce';
+import { parseAsString, parseAsInteger, useQueryState } from '@repo/hooks/useQueryState';
 
-// Define the shape of the API response, including pagination metadata
-interface PaginatedUnitsResponse {
-  data: ListedUnit[];
-  total: number;
-  page: number;
-  limit: number;
-}
-
-// Custom hook for debouncing a value
-function useDebounce<T>(value: T, delay: number): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
-  return debouncedValue;
-}
+export const handle: RouteHandle = {
+  breadcrumb: () => [{ title: 'Units' }],
+};
 
 export default function UnitsListPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-  // Component state for the search input field
-  const [filterInput, setFilterInput] = useState(
-    () => searchParams.get('filter') || '',
-  );
+  const [search, setSearch] = useQueryState<string | null>('search', parseAsString);
+  const debouncedSearch = useDebounce(search, 300);
 
-  // Debounce the search input to avoid rapid API calls
-  const debouncedFilter = useDebounce(filterInput, 300);
+  const [page, setPage] = useQueryState<number | null>('page', parseAsInteger);
+  const debouncedPage = useDebounce(page ?? 1, 300);
 
-  // Pagination and filter state derived from URL search parameters
-  const page = parseInt(searchParams.get('page') || '1', 10);
-  const limit = parseInt(searchParams.get('limit') || '10', 10);
-
-  // Update URL when debounced filter changes
-  useEffect(() => {
-    const newSearchParams = new URLSearchParams(searchParams);
-    if (debouncedFilter) {
-      newSearchParams.set('filter', debouncedFilter);
-    } else {
-      newSearchParams.delete('filter');
-    }
-    // Reset to first page when filter changes
-    newSearchParams.set('page', '1');
-    setSearchParams(newSearchParams, { replace: true });
-  }, [debouncedFilter, setSearchParams]);
-
-  const queryParams = useMemo(
-    () => ({
-      page,
-      limit,
-      filter: searchParams.get('filter') || undefined,
-    }),
-    [page, limit, searchParams],
-  );
+  const [limit, setLimit] = useQueryState<number | null>('pageSize', parseAsInteger);
+  const debouncedLimit = useDebounce(limit ?? 10, 300);
 
   const {
     data: response,
     isLoading,
     isError,
     error,
-  } = useQuery<PaginatedUnitsResponse>({
-    queryKey: ['units', queryParams],
+  } = useQuery<Paginated<ListedUnit>>({
+    queryKey: ['units', 'list', debouncedSearch, debouncedPage, debouncedLimit],
     queryFn: async () => {
-      const result = await httpService.get<PaginatedUnitsResponse>('/units', {
-        params: queryParams,
+      const result = await httpService.get<Paginated<ListedUnit>>('/units', {
+        params: {
+          page: debouncedPage,
+          limit: debouncedLimit,
+          filter: debouncedSearch || undefined,
+        },
       });
       if (result.error) {
         throw new Error(result.error);
@@ -113,65 +74,35 @@ export default function UnitsListPage() {
     _event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number,
   ) => {
-    setSearchParams(
-      (prev) => {
-        prev.set('page', (newPage + 1).toString());
-        return prev;
-      },
-      { replace: true },
-    );
+    setPage(newPage);
   };
 
   const handleRowsPerPageChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setSearchParams(
-      (prev) => {
-        prev.set('limit', event.target.value);
-        prev.set('page', '1'); // Reset to first page
-        return prev;
-      },
-      { replace: true },
-    );
-  };
-
-  // --- Action Menu State ---
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedUnitId, setSelectedUnitId] = useState<null | string>(null);
-
-  const handleMenuOpen = (
-    event: React.MouseEvent<HTMLElement>,
-    unitId: string,
-  ) => {
-    setAnchorEl(event.currentTarget);
-    setSelectedUnitId(unitId);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    setSelectedUnitId(null);
+    setLimit(parseInt(event.target.value, 10));
+    setPage(1);
   };
 
   const getLeaseStatusChip = (status: ListedUnit['leaseStatus']) => {
     switch (status) {
       case 'ACTIVE':
-        return <Chip label="Active" color="success" size="small" />;
+        return <Chip label="active" color="success" size="small" />;
       case 'EXPIRED':
-        return <Chip label="Expired" color="default" size="small" />;
+        return <Chip label="expired" color="default" size="small" />;
       case 'PENDING':
-        return <Chip label="Pending" color="warning" size="small" />;
+        return <Chip label="pending" color="warning" size="small" />;
       case 'TERMINATED':
-        return <Chip label="Terminated" color="error" size="small" />;
+        return <Chip label="terminated" color="error" size="small" />;
       default:
-        return <Chip label="Vacant" variant="outlined" size="small" />;
+        return <Chip label="vacant" variant="outlined" size="small" />;
     }
   };
 
   return (
-    <Card>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       <Box
         sx={{
-          p: 2,
           display: 'flex',
           flexDirection: { xs: 'column', sm: 'row' },
           justifyContent: 'space-between',
@@ -180,8 +111,8 @@ export default function UnitsListPage() {
         }}
       >
         <TextField
-          value={filterInput}
-          onChange={(e) => setFilterInput(e.target.value)}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by label, type, or complex..."
           variant="outlined"
           size="small"
@@ -194,141 +125,118 @@ export default function UnitsListPage() {
           }}
           sx={{ width: { xs: '100%', sm: '320px' } }}
         />
-        <Button variant="contained">Add Unit</Button>
+        <Button component={Link} variant="contained" to="/dashboard/properties/units/create">
+          Add Unit
+        </Button>
       </Box>
 
-      <TableContainer>
-        <Table sx={{ minWidth: 800 }}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Unit Label</TableCell>
-              <TableCell>Complex</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Rent</TableCell>
-              <TableCell>Lease Status</TableCell>
-              <TableCell align="center">Maintenance</TableCell>
-              <TableCell align="right">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {isLoading ? (
-              // Skeleton loaders
-              Array.from(new Array(limit)).map((_, index) => (
-                <TableRow key={index}>
-                  <TableCell colSpan={7}>
-                    <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : isError ? (
-              // Error state
+      <Paper variant="outlined" sx={{ borderRadius: 2, overflow: 'hidden' }}>
+        <TableContainer>
+          <Table sx={{ minWidth: 800 }}>
+            <TableHead>
               <TableRow>
-                <TableCell colSpan={7} align="center">
-                  <Typography color="error">
-                    Error loading units. Please try again later.
-                  </Typography>
-                </TableCell>
+                <TableCell>Unit Label</TableCell>
+                <TableCell>Complex</TableCell>
+                <TableCell>Type</TableCell>
+                <TableCell>Rent</TableCell>
+                <TableCell>Lease Status</TableCell>
+                <TableCell align="center">Maintenance</TableCell>
               </TableRow>
-            ) : response?.data.length === 0 ? (
-              // Empty state
-              <TableRow>
-                <TableCell colSpan={7} align="center">
-                  <Typography color="text.secondary">
-                    No units found.
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            ) : (
-              // Data rows
-              response?.data.map((unit) => (
-                <TableRow hover key={unit.id}>
-                  <TableCell>
-                    <Typography
-                      component={NavLink}
-                      to={`/dashboard/properties/units/${unit.id}`}
-                      variant="subtitle2"
-                      sx={{
-                        color: 'text.primary',
-                        textDecoration: 'none',
-                        '&:hover': { textDecoration: 'underline' },
-                      }}
+            </TableHead>
+            <TableBody>
+              {isLoading
+                ? Array.from(new Array(limit)).map((_, index) => (
+                    <TableRow key={index}>
+                      <TableCell colSpan={6}>
+                        <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : isError
+                ? <TableRow>
+                    <TableCell colSpan={6} align="center">
+                      <Typography color="error">
+                        Error loading units. Please try again later.
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                : response?.data.length === 0
+                ? <TableRow>
+                    <TableCell colSpan={6} align="center">
+                      <Typography color="text.secondary">
+                        No units found.
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                : response?.data.map((unit) => (
+                    <TableRow
+                      hover
+                      key={unit.id}
+                      onClick={() =>
+                        navigate(`/dashboard/properties/units/${unit.id}`)
+                      }
+                      sx={{ cursor: 'pointer' }}
                     >
-                      {unit.label}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography
-                      component={NavLink}
-                      to={`/dashboard/properties/complexes/${unit.complex.id}`}
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{
-                        textDecoration: 'none',
-                        '&:hover': { textDecoration: 'underline' },
-                      }}
-                    >
-                      {unit.complex.name}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>{unit.type || 'N/A'}</TableCell>
-                  <TableCell>
-                    {unit.rentAmount
-                      ? `${unit.rentCurrency} ${Number(
-                          unit.rentAmount,
-                        ).toLocaleString()}`
-                      : 'N/A'}
-                  </TableCell>
-                  <TableCell>{getLeaseStatusChip(unit.leaseStatus)}</TableCell>
-                  <TableCell align="center">
-                    {unit._count.maintenanceRequests > 0 ? (
-                      <Chip
-                        label={unit._count.maintenanceRequests}
-                        color="warning"
-                        size="small"
-                      />
-                    ) : (
-                      '0'
-                    )}
-                  </TableCell>
-                  <TableCell align="right">
-                    <IconButton
-                      size="small"
-                      onClick={(e) => handleMenuOpen(e, unit.id)}
-                    >
-                      <MoreVertIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                      <TableCell>
+                        <Typography variant="subtitle2" color="text.primary">
+                          {unit.label}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography
+                          component={NavLink}
+                          to={`/dashboard/properties/complexes/${unit.complex.id}`}
+                          onClick={(e) => e.stopPropagation()} // Prevent row click
+                          variant="body2"
+                          sx={{
+                            color: 'text.secondary',
+                            textDecoration: 'none',
+                            '&:hover': { textDecoration: 'underline' },
+                          }}
+                        >
+                          {unit.complex.name}
+                        </Typography>
+                      </TableCell>
+                      <TableCell sx={{ color: 'text.secondary' }}>
+                        {unit.type || 'N/A'}
+                      </TableCell>
+                      <TableCell sx={{ color: 'text.secondary' }}>
+                        {unit.rentAmount
+                          ? `${unit.rentCurrency} ${Number(
+                              unit.rentAmount,
+                            ).toLocaleString()}`
+                          : 'N/A'}
+                      </TableCell>
+                      <TableCell>
+                        {getLeaseStatusChip(unit.leaseStatus)}
+                      </TableCell>
+                      <TableCell align="center">
+                        {unit._count.maintenanceRequests > 0 ? (
+                          <Chip
+                            label={unit._count.maintenanceRequests}
+                            color="warning"
+                            size="small"
+                          />
+                        ) : (
+                          '0'
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
 
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-      >
-        <MenuItem
-          component={NavLink}
-          to={`/dashboard/properties/units/${selectedUnitId}`}
-          onClick={handleMenuClose}
-        >
-          View Details
-        </MenuItem>
-        <MenuItem onClick={handleMenuClose}>Edit Unit</MenuItem>
-      </Menu>
-
-      <TablePagination
-        component="div"
-        count={response?.total ?? 0}
-        page={page - 1} // MUI TablePagination is 0-indexed
-        onPageChange={handlePageChange}
-        rowsPerPage={limit}
-        onRowsPerPageChange={handleRowsPerPageChange}
-        rowsPerPageOptions={[5, 10, 25]}
-      />
-    </Card>
+        <TablePagination
+          component="div"
+          count={response?.meta.total ?? 0}
+          page={(page ?? 1) - 1}
+          onPageChange={handlePageChange}
+          rowsPerPage={limit ?? 10}
+          onRowsPerPageChange={handleRowsPerPageChange}
+          rowsPerPageOptions={[5, 10, 25]}
+        />
+      </Paper>
+    </Box>
   );
 }

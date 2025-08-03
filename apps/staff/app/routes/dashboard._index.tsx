@@ -95,7 +95,7 @@ export default function DashboardPage() {
 
       {/* Stats Cards */}
       <Grid container spacing={3}>
-        {isLoading ? (
+        {!statsData && isLoading ? (
           // Render skeleton loaders while data is being fetched
           Array.from(new Array(5)).map((_, index) => (
             <Grid size={{ xs: 12, sm: 6, md: 4, lg: 2.4 }} key={index}>

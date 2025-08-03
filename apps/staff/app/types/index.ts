@@ -1,4 +1,5 @@
 import { UnitType, LeaseStatus, MaintenanceStatus, StaffRole } from '@repo/types'
+import type { UIMatch } from 'react-router'
 
 // --- Complex Types ---
 

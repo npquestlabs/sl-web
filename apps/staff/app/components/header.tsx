@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import {
   AppBar,
@@ -81,7 +80,7 @@ export function Header() {
             {navigation.map((item) => (
               <Button
                 key={item.to}
-                component={NavLink as any}
+                component={NavLink}
                 to={item.to}
                 end={item.end}
                 sx={{
@@ -136,7 +135,7 @@ export function Header() {
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           >
             <MenuItem
-              component={NavLink as any}
+              component={NavLink}
               to="/dashboard/profile"
               onClick={handleMenuClose}
             >
@@ -172,7 +171,7 @@ export function Header() {
               {navigation.map((item) => (
                 <ListItem key={item.to} disablePadding>
                   <ListItemButton
-                    component={NavLink as any}
+                    component={NavLink}
                     to={item.to}
                     end={item.end}
                     onClick={() => setMobileMenuOpen(false)}

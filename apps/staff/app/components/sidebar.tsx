@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
   Drawer,
@@ -100,7 +99,7 @@ export function Sidebar({ drawerWidth, isCollapsed }: SidebarProps) {
             placement="right"
           >
             <ListItemButton
-              component={NavLink as any}
+              component={NavLink}
               to={item.to}
               end={item.end}
               sx={{
