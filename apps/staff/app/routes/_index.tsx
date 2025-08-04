@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 import { useAuthStore } from '~/store/auth';
 
 import {
@@ -15,8 +15,8 @@ import {
   Container,
   Grid,
   Divider,
-  Link,
   IconButton,
+  Link as MuiLink,
   alpha,
   Stack,
   Accordion,
@@ -185,9 +185,7 @@ export default function Welcome() {
           transition: (theme) =>
             theme.transitions.create(['background-color', 'box-shadow']),
           borderBottom: (theme) =>
-            `1px solid ${
-              scrolled ? theme.palette.divider : 'transparent'
-            }`,
+            `1px solid ${scrolled ? theme.palette.divider : 'transparent'}`,
           color: 'text.primary',
         }}
       >
@@ -238,15 +236,12 @@ export default function Welcome() {
                 Testimonials
               </Button>
               {user ? (
-                <Button
-                  variant="contained"
-                  onClick={() => navigate('/dashboard')}
-                >
+                <Button variant="contained" component={Link} to="/dashboard">
                   Go to Dashboard
                 </Button>
               ) : (
                 <Stack direction="row" spacing={1.5}>
-                  <Button variant="outlined" onClick={() => navigate('/login')}>
+                  <Button variant="outlined" component={Link} to="/login">
                     Login
                   </Button>
                   <Button
@@ -335,8 +330,8 @@ export default function Welcome() {
               color="text.secondary"
               sx={{ textAlign: 'center', maxWidth: '600px', mx: 'auto', mb: 8 }}
             >
-              We&apos;ve designed a simple, repeatable process to take the complexity
-              out of property management.
+              We&apos;ve designed a simple, repeatable process to take the
+              complexity out of property management.
             </Typography>
             <Grid container spacing={4}>
               {[
@@ -361,10 +356,7 @@ export default function Welcome() {
                   desc: 'Receive maintenance requests, assign vendors, and track jobs from start to finish. Everyone stays in the loop.',
                 },
               ].map((step) => (
-                <Grid
-                  size={{ xs: 12, sm: 6, md: 3 }}
-                  key={step.num}
-                >
+                <Grid size={{ xs: 12, sm: 6, md: 3 }} key={step.num}>
                   <Box sx={{ textAlign: 'center' }}>
                     <Avatar
                       sx={{
@@ -378,10 +370,7 @@ export default function Welcome() {
                     >
                       {step.num}
                     </Avatar>
-                    <Typography
-                      variant="h6"
-                      sx={{ fontWeight: 'bold', mb: 1 }}
-                    >
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
                       {step.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -423,10 +412,7 @@ export default function Welcome() {
                     }}
                   >
                     <Box sx={{ mb: 2 }}>{item.icon}</Box>
-                    <Typography
-                      variant="h6"
-                      sx={{ fontWeight: 'bold', mb: 1 }}
-                    >
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
                       {item.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -455,8 +441,8 @@ export default function Welcome() {
               color="text.secondary"
               sx={{ textAlign: 'center', maxWidth: '600px', mx: 'auto', mb: 8 }}
             >
-              PropertyPro is designed to meet the unique challenges of
-              different property management roles.
+              PropertyPro is designed to meet the unique challenges of different
+              property management roles.
             </Typography>
             <Grid container spacing={4} justifyContent="center">
               {personas.map((item) => (
@@ -472,10 +458,7 @@ export default function Welcome() {
                     }}
                   >
                     <Box sx={{ mb: 2 }}>{item.icon}</Box>
-                    <Typography
-                      variant="h6"
-                      sx={{ fontWeight: 'bold', mb: 1 }}
-                    >
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
                       {item.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -511,7 +494,9 @@ export default function Welcome() {
                     }}
                   >
                     <CardContent sx={{ flexGrow: 1 }}>
-                      <Box sx={{ display: 'flex', mb: 1.5, color: 'warning.main' }}>
+                      <Box
+                        sx={{ display: 'flex', mb: 1.5, color: 'warning.main' }}
+                      >
                         {[...Array(t.rating)].map((_, i) => (
                           <StarIcon key={i} />
                         ))}
@@ -664,7 +649,7 @@ export default function Welcome() {
               <Typography sx={{ fontWeight: 'bold', mb: 1 }}>
                 Product
               </Typography>
-              <Link
+              <MuiLink
                 href="#"
                 color="text.secondary"
                 display="block"
@@ -672,8 +657,8 @@ export default function Welcome() {
                 sx={{ mb: 0.5 }}
               >
                 Features
-              </Link>
-              <Link
+              </MuiLink>
+              <MuiLink
                 href="#"
                 color="text.secondary"
                 display="block"
@@ -681,8 +666,8 @@ export default function Welcome() {
                 sx={{ mb: 0.5 }}
               >
                 Pricing
-              </Link>
-              <Link
+              </MuiLink>
+              <MuiLink
                 href="#"
                 color="text.secondary"
                 display="block"
@@ -690,13 +675,13 @@ export default function Welcome() {
                 sx={{ mb: 0.5 }}
               >
                 Security
-              </Link>
+              </MuiLink>
             </Grid>
             <Grid size={{ xs: 6, md: 2 }}>
               <Typography sx={{ fontWeight: 'bold', mb: 1 }}>
                 Company
               </Typography>
-              <Link
+              <MuiLink
                 href="#"
                 color="text.secondary"
                 display="block"
@@ -704,8 +689,8 @@ export default function Welcome() {
                 sx={{ mb: 0.5 }}
               >
                 About Us
-              </Link>
-              <Link
+              </MuiLink>
+              <MuiLink
                 href="#"
                 color="text.secondary"
                 display="block"
@@ -713,8 +698,8 @@ export default function Welcome() {
                 sx={{ mb: 0.5 }}
               >
                 Careers
-              </Link>
-              <Link
+              </MuiLink>
+              <MuiLink
                 href="#"
                 color="text.secondary"
                 display="block"
@@ -722,11 +707,11 @@ export default function Welcome() {
                 sx={{ mb: 0.5 }}
               >
                 Contact
-              </Link>
+              </MuiLink>
             </Grid>
             <Grid size={{ xs: 6, md: 2 }}>
               <Typography sx={{ fontWeight: 'bold', mb: 1 }}>Legal</Typography>
-              <Link
+              <MuiLink
                 href="#"
                 color="text.secondary"
                 display="block"
@@ -734,8 +719,8 @@ export default function Welcome() {
                 sx={{ mb: 0.5 }}
               >
                 Privacy Policy
-              </Link>
-              <Link
+              </MuiLink>
+              <MuiLink
                 href="#"
                 color="text.secondary"
                 display="block"
@@ -743,7 +728,7 @@ export default function Welcome() {
                 sx={{ mb: 0.5 }}
               >
                 Terms of Service
-              </Link>
+              </MuiLink>
             </Grid>
           </Grid>
           <Divider sx={{ my: 4 }} />
