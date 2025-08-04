@@ -154,7 +154,7 @@ export default function CreateUnitPage() {
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Unit Label (e.g., Apt 101, Room 3B)"
+                label="Label (e.g., Apt 101, Room 3B)"
                 fullWidth
                 required
                 error={!!errors.label}

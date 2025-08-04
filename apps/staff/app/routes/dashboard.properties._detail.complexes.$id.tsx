@@ -12,7 +12,6 @@ import {
   Button,
   Chip,
   Divider,
-  IconButton,
   List,
   ListItem,
   ListItemAvatar,
@@ -21,45 +20,13 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'sonner';
 
 import type { DetailedComplex } from '~/types';
 import { httpService } from '@repo/api/httpService';
 import type { RouteHandle } from './dashboard.properties';
+import { EditableInfoRow } from '~/components/info-row';
 
-const InfoRow = ({
-  label,
-  value,
-  onEdit,
-}: {
-  label: string;
-  value: React.ReactNode;
-  onEdit?: () => void;
-}) => (
-  <Stack
-    direction="row"
-    justifyContent="space-between"
-    alignItems="center"
-    sx={{ py: 2 }}
-  >
-    <Box>
-      <Typography variant="body2" color="text.secondary">
-        {label}
-      </Typography>
-      <Typography variant="body1" color="text.primary" sx={{ fontWeight: 500 }}>
-        {value || 'N/A'}
-      </Typography>
-    </Box>
-    {onEdit && (
-      <IconButton onClick={onEdit} size="small">
-        <EditIcon fontSize="small" />
-      </IconButton>
-    )}
-  </Stack>
-);
-
-// Loader function to fetch data before the component renders
 export async function clientLoader({ params }: ClientLoaderFunctionArgs) {
   const { id } = params;
   if (!id) throw new Response('Not Found', { status: 404 });
@@ -76,16 +43,27 @@ export const handle: RouteHandle<DetailedComplex> = {
   breadcrumb: (match) => [{ title: match.data?.name || 'Complex Details' }],
 };
 
+export function HydrateFallback() {
+  return (
+    <Stack spacing={2}>
+      <Skeleton variant="text" width="40%" height={40} />
+      <Skeleton variant="rectangular" height={80} />
+      <Skeleton variant="rectangular" height={80} />
+      <Skeleton variant="rectangular" height={80} />
+    </Stack>
+  );
+}
+
 export default function ComplexDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const initialData = useLoaderData<typeof clientLoader>();
-
+  const complexQueryKey = ['complex', id];
   const {
     data: complex,
     isLoading,
     isError,
   } = useQuery<DetailedComplex>({
-    queryKey: ['complex', id],
+    queryKey: complexQueryKey,
     queryFn: async () => {
       const res = await httpService.get<DetailedComplex>(`/complexes/${id}`);
       if (res.error) throw new Error(res.error);
@@ -95,14 +73,7 @@ export default function ComplexDetailsPage() {
   });
 
   if (isLoading) {
-    return (
-      <Stack spacing={2}>
-        <Skeleton variant="text" width="40%" height={40} />
-        <Skeleton variant="rectangular" height={80} />
-        <Skeleton variant="rectangular" height={80} />
-        <Skeleton variant="rectangular" height={80} />
-      </Stack>
-    );
+    return <HydrateFallback />;
   }
 
   if (isError || !complex) {
@@ -120,28 +91,40 @@ export default function ComplexDetailsPage() {
         <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1 }}>
           Complex Information
         </Typography>
-        <InfoRow
+        <EditableInfoRow
           label="Name"
           value={complex.name}
-          onEdit={() => toast.info('Edit Name clicked')}
+          entityId={complex.id}
+          fieldName="name"
+          endpoint="/complexes"
+          queryKey={complexQueryKey}
         />
         <Divider />
-        <InfoRow
+        <EditableInfoRow
           label="Address"
-          value={`${complex.address}, ${complex.cityName}, ${complex.countryCode}`}
-          onEdit={() => toast.info('Edit Address clicked')}
+          value={complex.address}
+          entityId={complex.id}
+          fieldName="address"
+          endpoint="/complexes"
+          queryKey={complexQueryKey}
         />
         <Divider />
-        <InfoRow
+        <EditableInfoRow
           label="Description"
           value={complex.description}
-          onEdit={() => toast.info('Edit Description clicked')}
+          entityId={complex.id}
+          fieldName="description"
+          endpoint="/complexes"
+          queryKey={complexQueryKey}
         />
         <Divider />
-        <InfoRow
+        <EditableInfoRow
           label="Notes"
           value={complex.notes}
-          onEdit={() => toast.info('Edit Notes clicked')}
+          entityId={complex.id}
+          fieldName="notes"
+          endpoint="/complexes"
+          queryKey={complexQueryKey}
         />
       </Box>
 

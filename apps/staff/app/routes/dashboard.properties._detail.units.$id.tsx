@@ -11,7 +11,6 @@ import {
   Button,
   Chip,
   Divider,
-  IconButton,
   List,
   ListItem,
   ListItemAvatar,
@@ -20,46 +19,13 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'sonner';
 
 import type { DetailedUnit } from '~/types';
 import { httpService } from '@repo/api/httpService';
 import type { RouteHandle } from './dashboard.properties';
+import { EditableInfoRow, InfoRow } from '~/components/info-row';
 
-// Reusing the same helper component
-const InfoRow = ({
-  label,
-  value,
-  onEdit,
-}: {
-  label: string;
-  value: React.ReactNode;
-  onEdit?: () => void;
-}) => (
-  <Stack
-    direction="row"
-    justifyContent="space-between"
-    alignItems="center"
-    sx={{ py: 2 }}
-  >
-    <Box>
-      <Typography variant="body2" color="text.secondary">
-        {label}
-      </Typography>
-      <Typography variant="body1" color="text.primary" sx={{ fontWeight: 500 }}>
-        {value || 'N/A'}
-      </Typography>
-    </Box>
-    {onEdit && (
-      <IconButton onClick={onEdit} size="small">
-        <EditIcon fontSize="small" />
-      </IconButton>
-    )}
-  </Stack>
-);
-
-// Loader to fetch data before rendering
 export async function clientLoader({ params }: ClientLoaderFunctionArgs) {
   const { id } = params;
   if (!id) throw new Response('Not Found', { status: 404 });
@@ -92,13 +58,13 @@ export const handle: RouteHandle<DetailedUnit> = {
 export default function UnitDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const initialData = useLoaderData<typeof clientLoader>();
-
+  const unitQueryKey = ['unit', id];
   const {
     data: unit,
     isLoading,
     isError,
   } = useQuery<DetailedUnit>({
-    queryKey: ['unit', id],
+    queryKey: unitQueryKey,
     queryFn: async () => {
       const res = await httpService.get<DetailedUnit>(`/units/${id}`);
       if (res.error) throw new Error(res.error);
@@ -134,34 +100,40 @@ export default function UnitDetailsPage() {
         </Typography>
         <InfoRow label="Complex" value={unit.complex.name} />
         <Divider />
-        <InfoRow
-          label="Unit Label"
+        <EditableInfoRow
+          label="Label"
           value={unit.label}
-          onEdit={() => toast.info('Edit Label clicked')}
+          entityId={unit.id}
+          fieldName="label"
+          endpoint="/units"
+          queryKey={unitQueryKey}
         />
         <Divider />
-        <InfoRow
+        <EditableInfoRow
           label="Type"
           value={unit.type}
-          onEdit={() => toast.info('Edit Type clicked')}
+          entityId={unit.id}
+          fieldName="type"
+          endpoint="/units"
+          queryKey={unitQueryKey}
         />
         <Divider />
-        <InfoRow
+        <EditableInfoRow
           label="Rent"
-          value={
-            unit.rentAmount
-              ? `${unit.rentCurrency} ${Number(
-                  unit.rentAmount,
-                ).toLocaleString()}`
-              : 'N/A'
-          }
-          onEdit={() => toast.info('Edit Rent clicked')}
+          value={unit.rentAmount}
+          entityId={unit.id}
+          fieldName="rentAmount"
+          endpoint="/units"
+          queryKey={unitQueryKey}
         />
         <Divider />
-        <InfoRow
+        <EditableInfoRow
           label="Description"
           value={unit.description}
-          onEdit={() => toast.info('Edit Description clicked')}
+          entityId={unit.id}
+          fieldName="description"
+          endpoint="/units"
+          queryKey={unitQueryKey}
         />
       </Box>
 

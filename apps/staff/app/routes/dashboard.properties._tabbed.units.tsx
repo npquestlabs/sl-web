@@ -149,7 +149,7 @@ export default function UnitsListPage() {
           <Table sx={{ minWidth: 800 }}>
             <TableHead>
               <TableRow>
-                <TableCell>Unit Label</TableCell>
+                <TableCell>Label</TableCell>
                 <TableCell>Complex</TableCell>
                 <TableCell>Type</TableCell>
                 <TableCell>Rent</TableCell>
