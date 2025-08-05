@@ -10,12 +10,12 @@ import {
   Divider,
 } from '@mui/material';
 import { coreService } from '@repo/api/coreService';
-import { googleService } from '@repo/api/googleService';
 import { type MessageResponse } from '@repo/types';
 import { toast } from 'sonner';
 
 export default function AuthLayout() {
   const handleGoogleLogin = async () => {
+    const { googleService } = await import('@repo/api/googleService');
     try {
       const token = await googleService.signIn();
       // Now, manually call coreService to send the token to the backend
