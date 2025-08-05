@@ -1,7 +1,7 @@
 import { gapi } from 'gapi-script';
 
 const GOOGLE_CLIENT_ID =
-    process.env.VITE_GOOGLE_CLIENT_ID ||
+    import.meta.env?.VITE_GOOGLE_CLIENT_ID ||
     'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
 
 class GoogleAuthService {
