@@ -9,6 +9,8 @@
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
+    "@types/gapi": "^0.0.47",
+    "@types/gapi.auth2": "^0.0.61",
     "prettier": "3.5.3",
     "turbo": "^2.4.4",
     "typescript": "5.8.2"

@@ -9,7 +9,8 @@ import {
   Avatar,
   Divider,
 } from '@mui/material';
-import { coreService, googleService } from '@repo/api/coreService';
+import { coreService } from '@repo/api/coreService';
+import { googleService } from '@repo/api/googleService';
 import { type MessageResponse } from '@repo/types';
 import { toast } from 'sonner';
 

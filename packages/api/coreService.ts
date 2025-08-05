@@ -11,14 +11,14 @@ const ACCESS_TOKEN_KEY =
 const REFRESH_TOKEN_KEY =
   import.meta.env?.VITE_REFRESH_TOKEN_KEY || 'refresh_token';
 
-const API_BASE_URL =
-  import.meta.env?.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
+const CORE_SERVICE_API_URL =
+  import.meta.env?.VITE_CORE_SERVICE_API_URL || 'http://localhost:5000/api/v1';
 
 const CONSOLE_NAME = import.meta.env?.VITE_CONSOLE_NAME || 'not-set';
 
 class CoreService {
   private api: AxiosInstance;
-  private baseURL = API_BASE_URL;
+  private baseURL = CORE_SERVICE_API_URL;
   private unauthenticatedInterceptor: (() => void) | undefined = undefined;
 
   constructor() {

@@ -1,4 +1,3 @@
-// Mainly for interracting with our azure microservice for property listing
 import axios, {
   type AxiosInstance,
   type AxiosRequestConfig,
