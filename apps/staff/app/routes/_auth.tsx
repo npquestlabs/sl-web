@@ -9,8 +9,25 @@ import {
   Avatar,
   Divider,
 } from '@mui/material';
+import { coreService, googleService } from '@repo/api/coreService';
+import { type MessageResponse } from '@repo/types';
+import { toast } from 'sonner';
 
 export default function AuthLayout() {
+  const handleGoogleLogin = async () => {
+    try {
+      const token = await googleService.signIn();
+      // Now, manually call coreService to send the token to the backend
+      const response = await coreService.post<MessageResponse>('/auth/google', { token });
+      if (response.error) {
+        throw new Error(response.error)
+      }
+      // Handle successful login, e.g., redirect or update user state
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message: "Unknown error occurred");
+      // TODO
+    }
+  };
   return (
     <Box
       sx={{
@@ -88,7 +105,7 @@ export default function AuthLayout() {
                       style={{ height: '20px', width: '20px' }}
                     />
                   }
-                  onClick={() => alert('Google login coming soon!')}
+                  onClick={handleGoogleLogin}
                 >
                   Google
                 </Button>

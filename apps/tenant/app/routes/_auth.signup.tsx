@@ -11,7 +11,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { toast } from 'sonner';
-import { httpService } from '@repo/api/httpService';
+import { coreService } from '@repo/api/coreService';
 import { type MessageResponse } from '@repo/types';
 import { OTP } from '@repo/ui/components/otp';
 
@@ -38,7 +38,7 @@ export default function Signup() {
     setLoading(true);
     try {
       const user = { email, password, staff: { firstName, lastName } };
-      const result = await httpService.post<MessageResponse>(
+      const result = await coreService.post<MessageResponse>(
         '/auth/register/stage-one',
         { email, user },
       );
@@ -57,7 +57,7 @@ export default function Signup() {
     setLoading(true);
     const user = { email, password, staff: { firstName, lastName } };
     try {
-      const result = await httpService.post<MessageResponse>(
+      const result = await coreService.post<MessageResponse>(
         '/auth/register/stage-two',
         { otp, user },
       );

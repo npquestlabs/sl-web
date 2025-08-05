@@ -11,7 +11,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { toast } from 'sonner';
-import { httpService } from '@repo/api/httpService';
+import { coreService } from '@repo/api/coreService';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -30,7 +30,7 @@ export default function LoginPage() {
     e.preventDefault();
     setLoggingIn(true);
     try {
-      const result = await httpService.post('/auth/login', { email, password });
+      const result = await coreService.post('/auth/login', { email, password });
       if (result.error) throw new Error(result.error);
 
       //await refetch();

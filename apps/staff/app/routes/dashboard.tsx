@@ -1,5 +1,5 @@
 import { Box, CircularProgress, useTheme } from '@mui/material';
-import { httpService } from '@repo/api/httpService';
+import { coreService } from '@repo/api/coreService';
 import { useEffect } from 'react';
 import { Outlet, redirect, useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -41,12 +41,12 @@ export default function DashboardLayout() {
   //const user = useLoaderData<typeof clientLoader>();
 
   useEffect(() => {
-    httpService.intercept401Response(() => {
+    coreService.intercept401Response(() => {
       toast.error('Session expired. Please log in again.');
       navigate('/login');
     });
     return () => {
-      httpService.clear401Interceptor();
+      coreService.clear401Interceptor();
     };
   }, [navigate]);
 

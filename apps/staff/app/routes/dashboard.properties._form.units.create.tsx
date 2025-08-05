@@ -16,7 +16,7 @@ import {
 import { LoadingButton } from '@mui/lab';
 import { toast } from 'sonner';
 
-import { httpService } from '@repo/api/httpService';
+import { coreService } from '@repo/api/coreService';
 import { CreateUnitSchema } from '@repo/utils/schemas';
 import type { ListedComplex } from '~/types';
 import { type MessageResponse, UnitType, type Paginated } from '@repo/types';
@@ -44,7 +44,7 @@ export default function CreateUnitPage() {
   >({
     queryKey: ['complexes', 'search', debouncedComplexSearch],
     queryFn: async () => {
-      const res = await httpService.get<Paginated<ListedComplex>>(
+      const res = await coreService.get<Paginated<ListedComplex>>(
         '/complexes',
         {
           params: {
@@ -77,7 +77,7 @@ export default function CreateUnitPage() {
   const mutation = useMutation({
     mutationFn: async (formData: CreateUnitFormInputs) => {
       const { complexId, ...payload } = formData;
-      const result = await httpService.post<MessageResponse>(
+      const result = await coreService.post<MessageResponse>(
         `/complexes/${complexId}/units`,
         payload,
       );

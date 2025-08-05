@@ -4,7 +4,7 @@ import axios, {
   type AxiosResponse,
 } from 'axios';
 
-export type ApiResponse<T extends object> = T & { error?: string };
+export type CoreResponse<T extends object> = T & { error?: string };
 
 const ACCESS_TOKEN_KEY =
   import.meta.env?.VITE_ACCESS_TOKEN_KEY || 'access_token';
@@ -16,7 +16,7 @@ const API_BASE_URL =
 
 const CONSOLE_NAME = import.meta.env?.VITE_CONSOLE_NAME || 'not-set';
 
-class HttpService {
+class CoreService {
   private api: AxiosInstance;
   private baseURL = API_BASE_URL;
   private unauthenticatedInterceptor: (() => void) | undefined = undefined;
@@ -96,8 +96,8 @@ class HttpService {
   async get<T extends object>(
     url: string,
     config?: AxiosRequestConfig,
-  ): Promise<ApiResponse<T>> {
-    const response = await this.api.get<T>(url, config);
+  ): Promise<CoreResponse<T>> {
+    const response = await this.api.get<CoreResponse<T>>(url, config);
     return response.data;
   }
 
@@ -105,8 +105,8 @@ class HttpService {
     url: string,
     data?: B,
     config?: AxiosRequestConfig,
-  ): Promise<ApiResponse<T>> {
-    const response = await this.api.post<T>(url, data, config);
+  ): Promise<CoreResponse<T>> {
+    const response = await this.api.post<CoreResponse<T>>(url, data, config);
     return response.data;
   }
 
@@ -114,8 +114,8 @@ class HttpService {
     url: string,
     data?: B,
     config?: AxiosRequestConfig,
-  ): Promise<ApiResponse<T>> {
-    const response = await this.api.patch<T>(url, data, config);
+  ): Promise<CoreResponse<T>> {
+    const response = await this.api.patch<CoreResponse<T>>(url, data, config);
     return response.data;
   }
 
@@ -123,18 +123,18 @@ class HttpService {
     url: string,
     data?: B,
     config?: AxiosRequestConfig,
-  ): Promise<ApiResponse<T>> {
-    const response = await this.api.put<T>(url, data, config);
+  ): Promise<CoreResponse<T>> {
+    const response = await this.api.put<CoreResponse<T>>(url, data, config);
     return response.data;
   }
 
   async delete<T extends object>(
     url: string,
     config?: AxiosRequestConfig,
-  ): Promise<ApiResponse<T>> {
-    const response = await this.api.delete<T>(url, config);
+  ): Promise<CoreResponse<T>> {
+    const response = await this.api.delete<CoreResponse<T>>(url, config);
     return response.data;
   }
 }
 
-export const httpService = new HttpService();
+export const coreService = new CoreService();

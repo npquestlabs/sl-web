@@ -1,5 +1,5 @@
 import { type GenericUser } from '@repo/types';
-import { httpService } from '@repo/api/httpService';
+import { coreService } from '@repo/api/coreService';
 
 export class AuthState<T extends GenericUser> {
   user: T | null;
@@ -26,7 +26,7 @@ export class AuthState<T extends GenericUser> {
       let value: T | null = null;
 
       try {
-        const result = await httpService.get<T>('/auth/me');
+        const result = await coreService.get<T>('/auth/me');
         // const result = await dummyApi.getCurrentUser();
         if (result.error) {
           throw new Error(result.error);
@@ -51,7 +51,7 @@ export class AuthState<T extends GenericUser> {
     };
 
     this.logout = () => {
-      httpService.clearTokens();
+      coreService.clearTokens();
       setUser(null);
     };
   }

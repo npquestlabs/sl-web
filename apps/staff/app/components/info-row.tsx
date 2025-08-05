@@ -12,7 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import { toast } from 'sonner';
 
-import { httpService } from '@repo/api/httpService';
+import { coreService } from '@repo/api/coreService';
 
 interface EditableInfoRowProps {
   label: string;
@@ -47,7 +47,7 @@ export const EditableInfoRow: React.FC<EditableInfoRowProps> = ({
   const mutation = useMutation({
     mutationFn: (newValue: string | null) => {
       const payload = { [fieldName]: newValue };
-      return httpService.patch(`${endpoint}/${entityId}`, payload);
+      return coreService.patch(`${endpoint}/${entityId}`, payload);
     },
     onSuccess: (result) => {
       if (result.error) {

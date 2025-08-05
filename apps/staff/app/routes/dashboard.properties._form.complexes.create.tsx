@@ -8,7 +8,7 @@ import { Box, Grid, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { toast } from 'sonner';
 
-import { httpService } from '@repo/api/httpService';
+import { coreService } from '@repo/api/coreService';
 import { CreateComplexSchema } from '@repo/utils/schemas';
 
 type CreateComplexInputs = z.infer<typeof CreateComplexSchema>;
@@ -39,7 +39,7 @@ export default function CreateComplexPage() {
 
   const mutation = useMutation({
     mutationFn: (data: CreateComplexInputs) => {
-      return httpService.post('/complexes', data);
+      return coreService.post('/complexes', data);
     },
     onSuccess: async () => {
       toast.success('Complex created successfully!');

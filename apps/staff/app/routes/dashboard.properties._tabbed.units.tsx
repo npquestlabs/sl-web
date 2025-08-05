@@ -22,7 +22,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { toast } from 'sonner';
 
 import type { ListedUnit } from '~/types';
-import { httpService } from '@repo/api/httpService';
+import { coreService } from '@repo/api/coreService';
 import type { Paginated } from '@repo/types';
 import type { RouteHandle } from './dashboard.properties';
 import { useDebounce } from '@repo/hooks/useDebounce';
@@ -62,7 +62,7 @@ export default function UnitsListPage() {
   } = useQuery<Paginated<ListedUnit>>({
     queryKey: ['units', 'list', debouncedSearch, debouncedPage, debouncedLimit],
     queryFn: async () => {
-      const result = await httpService.get<Paginated<ListedUnit>>('/units', {
+      const result = await coreService.get<Paginated<ListedUnit>>('/units', {
         params: {
           page: debouncedPage,
           limit: debouncedLimit,

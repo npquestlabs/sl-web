@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, type FormEvent } from 'react';
 import { useNavigate, useSearchParams, Link, useLocation } from 'react-router';
-import { httpService } from '@repo/api/httpService';
+import { coreService } from '@repo/api/coreService';
 import { toast } from 'sonner';
 import { type MessageResponse } from '@repo/types';
 
@@ -58,7 +58,7 @@ export default function ResetPassword() {
     const verifyToken = async () => {
       setPageState('verifying');
       try {
-        const result = await httpService.post<MessageResponse>(
+        const result = await coreService.post<MessageResponse>(
           '/auth/verifications/use',
           { token },
         );
@@ -121,7 +121,7 @@ export default function ResetPassword() {
     }
     setPageState('resetting');
     try {
-      const result = await httpService.post<MessageResponse>(
+      const result = await coreService.post<MessageResponse>(
         '/auth/reset-password',
         { password },
       );

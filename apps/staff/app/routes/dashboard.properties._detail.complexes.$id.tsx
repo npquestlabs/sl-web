@@ -23,7 +23,7 @@ import {
 import { toast } from 'sonner';
 
 import type { DetailedComplex } from '~/types';
-import { httpService } from '@repo/api/httpService';
+import { coreService } from '@repo/api/coreService';
 import type { RouteHandle } from './dashboard.properties';
 import { EditableInfoRow } from '~/components/info-row';
 
@@ -31,7 +31,7 @@ export async function clientLoader({ params }: ClientLoaderFunctionArgs) {
   const { id } = params;
   if (!id) throw new Response('Not Found', { status: 404 });
 
-  const complex = await httpService.get<DetailedComplex>(`/complexes/${id}`);
+  const complex = await coreService.get<DetailedComplex>(`/complexes/${id}`);
   if (complex.error) {
     toast.error(`Error: ${complex.error}`);
     throw new Response('Not Found', { status: 404 });
@@ -65,7 +65,7 @@ export default function ComplexDetailsPage() {
   } = useQuery<DetailedComplex>({
     queryKey: complexQueryKey,
     queryFn: async () => {
-      const res = await httpService.get<DetailedComplex>(`/complexes/${id}`);
+      const res = await coreService.get<DetailedComplex>(`/complexes/${id}`);
       if (res.error) throw new Error(res.error);
       return res;
     },

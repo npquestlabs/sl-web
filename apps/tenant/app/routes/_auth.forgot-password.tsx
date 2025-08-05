@@ -10,7 +10,7 @@ import {
   InputAdornment,
 } from '@mui/material';
 import { toast } from 'sonner';
-import { httpService } from '@repo/api/httpService';
+import { coreService } from '@repo/api/coreService';
 import { type MessageResponse } from '@repo/types';
 
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
@@ -25,7 +25,7 @@ export default function ForgotPassword() {
     e.preventDefault();
     setLoading(true);
     try {
-      const result = await httpService.post<MessageResponse>(
+      const result = await coreService.post<MessageResponse>(
         '/auth/forgot-password',
         { email },
       );

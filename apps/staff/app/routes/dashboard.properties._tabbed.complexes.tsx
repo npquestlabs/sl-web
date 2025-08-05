@@ -22,7 +22,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { toast } from 'sonner';
 
 import type { ListedComplex } from '~/types';
-import { httpService } from '@repo/api/httpService';
+import { coreService } from '@repo/api/coreService';
 import type { Paginated } from '@repo/types';
 import { useDebounce } from '@repo/hooks/useDebounce';
 import {
@@ -71,7 +71,7 @@ export default function ComplexesListPage() {
       debouncedLimit,
     ],
     queryFn: async () => {
-      const result = await httpService.get<Paginated<ListedComplex>>(
+      const result = await coreService.get<Paginated<ListedComplex>>(
         '/complexes',
         {
           params: {

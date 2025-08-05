@@ -15,7 +15,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import BuildIcon from '@mui/icons-material/Build';
 
 import { type SummaryStats } from '@repo/types';
-import { httpService } from '@repo/api/httpService';
+import { coreService } from '@repo/api/coreService';
 import { getCurrentUser } from '~/store/auth';
 import { toast } from 'sonner';
 import { useEffect } from 'react';
@@ -38,7 +38,7 @@ export default function DashboardPage() {
   } = useQuery<SummaryStats>({
     queryKey: ['dashboardStats'],
     queryFn: async () => {
-      const result = await httpService.get<SummaryStats>('/staff/summary');
+      const result = await coreService.get<SummaryStats>('/staff/summary');
       if (result.error) {
         throw new Error(result.error);
       }
