@@ -179,6 +179,17 @@ export type MessageResponse = {
   message: string;
 };
 
+export type GoogleAuthResponse = {
+  userPreview: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    avatarUrl?: string;
+  }
+  completionToken: string;
+  stage: 'signup'
+};
+
 export type StaffSummary = {
   totalComplexes: number;
   totalUnits: number;

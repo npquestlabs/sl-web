@@ -32,7 +32,6 @@
     "@tanstack/react-query": "^5.83.0",
     "axios": "^1.11.0",
     "framer-motion": "^12.23.12",
-    "gapi-script": "^1.2.0",
     "react-hook-form": "^7.62.0",
     "zod": "^4.0.14",
     "zustand": "^5.0.6"

@@ -9,30 +9,28 @@ import {
   Avatar,
   Divider,
 } from '@mui/material';
-import { coreService } from '@repo/api/coreService';
-import { type MessageResponse } from '@repo/types';
-import { toast } from 'sonner';
 
 export default function AuthLayout() {
-  const handleGoogleLogin = async () => {
-    const { googleService } = await import('@repo/api/googleService');
-    try {
-      const token = await googleService.signIn();
-      // Now, manually call coreService to send the token to the backend
-      const response = await coreService.post<MessageResponse>('/auth/google', {
-        token,
-      });
-      if (response.error) {
-        throw new Error(response.error);
-      }
-      // Handle successful login, e.g., redirect or update user state
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : 'Unknown error occurred',
-      );
-      // TODO
-    }
+  const handleGoogleLogin = () => {
+    const googleAuthUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
+
+    const options = {
+      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+      redirect_uri: `${window.location.origin}/google-auth`,
+      response_type: 'code',
+      scope: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email',
+      ].join(' '),
+      access_type: 'offline',
+      prompt: 'consent',
+    };
+
+    const searchParams = new URLSearchParams(options);
+
+    window.location.href = `${googleAuthUrl}?${searchParams.toString()}`;
   };
+
   return (
     <Box
       sx={{
@@ -110,7 +108,7 @@ export default function AuthLayout() {
                       style={{ height: '20px', width: '20px' }}
                     />
                   }
-                  onClick={handleGoogleLogin}
+                  onClick={() => handleGoogleLogin()}
                 >
                   Google
                 </Button>
