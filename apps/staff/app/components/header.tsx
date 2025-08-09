@@ -70,7 +70,11 @@ export function Header({ user }: { user: ReturnType<typeof getCurrentUser> }) {
             }}
           >
             <NavLink to="/">
-              <AppLogo color1={theme.palette.secondary.main} color2={theme.palette.primary.main} size={48}/>
+              <AppLogo
+                  color1={theme.palette.background.default}
+                  color2={theme.palette.primary.main}
+                  size={48}
+                />
             </NavLink>
           </Typography>
           <Stack

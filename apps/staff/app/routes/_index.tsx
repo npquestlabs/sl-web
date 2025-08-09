@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router';
+import { useNavigate, Link, NavLink } from 'react-router';
 import { useAuthStore } from '~/store/auth';
 
 import {
@@ -208,23 +208,25 @@ export default function Welcome() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1.5,
-                color: 'primary.main',
-              }}
-            >
-              <AppLogo
-                color1={theme.palette.secondary.main}
-                color2={theme.palette.primary.main}
-                size={48}
-              />
-              <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                PropertyPro
-              </Typography>
-            </Box>
+            <NavLink to=".">
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1.5,
+                  color: 'primary.main',
+                }}
+              >
+                <AppLogo
+                  color1={theme.palette.secondary.main}
+                  color2={theme.palette.primary.main}
+                  size={48}
+                />
+                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                  PropertyPro
+                </Typography>
+              </Box>
+            </NavLink>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -642,24 +644,26 @@ export default function Welcome() {
         <Container maxWidth="lg">
           <Grid container spacing={4} justifyContent="space-between">
             <Grid size={{ xs: 12, md: 4 }}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1.5,
-                  color: 'primary.main',
-                  mb: 2,
-                }}
-              >
-                <AppLogo
-                  color1={theme.palette.secondary.main}
-                  color2={theme.palette.primary.main}
-                  size={48}
-                />
-                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                  PropertyPro
-                </Typography>
-              </Box>
+              <NavLink to=".">
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1.5,
+                    color: 'primary.main',
+                    mb: 2,
+                  }}
+                >
+                  <AppLogo
+                    color1={theme.palette.secondary.main}
+                    color2={theme.palette.primary.main}
+                    size={48}
+                  />
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    PropertyPro
+                  </Typography>
+                </Box>
+              </NavLink>
               <Typography variant="body2" color="text.secondary">
                 The modern ecosystem for rental property management.
               </Typography>
