@@ -22,6 +22,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  useTheme,
 } from '@mui/material';
 
 import { motion } from 'framer-motion';
@@ -31,7 +32,6 @@ import HomeWorkIcon from '@mui/icons-material/HomeWork';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PaymentIcon from '@mui/icons-material/Payment';
 import StarIcon from '@mui/icons-material/Star';
-import HouseIcon from '@mui/icons-material/House';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import GroupsIcon from '@mui/icons-material/Groups';
 import BusinessIcon from '@mui/icons-material/Business';
@@ -41,6 +41,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
+
+import AppLogo from '@repo/ui/components/logo';
+import { coreService } from '@repo/api/coreService';
 
 export function meta() {
   return [
@@ -55,8 +58,10 @@ export function meta() {
 
 export default function Welcome() {
   const navigate = useNavigate();
-  const { user } = useAuthStore();
+  const { user, refetch, isLoading } = useAuthStore();
   const [scrolled, setScrolled] = React.useState(false);
+
+  const theme = useTheme();
 
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
@@ -67,6 +72,12 @@ export default function Welcome() {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  React.useEffect(() => {
+    if (!user && !isLoading && coreService.hasTokens()) {
+      refetch();
+    }
+  }, [isLoading, refetch, user]);
 
   const smoothScroll = (id: string) => {
     const element = document.getElementById(id);
@@ -205,7 +216,11 @@ export default function Welcome() {
                 color: 'primary.main',
               }}
             >
-              <HouseIcon sx={{ fontSize: 28 }} />
+              <AppLogo
+                color1={theme.palette.secondary.main}
+                color2={theme.palette.primary.main}
+                size={48}
+              />
               <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                 PropertyPro
               </Typography>
@@ -636,7 +651,11 @@ export default function Welcome() {
                   mb: 2,
                 }}
               >
-                <HouseIcon sx={{ fontSize: 28 }} />
+                <AppLogo
+                  color1={theme.palette.secondary.main}
+                  color2={theme.palette.primary.main}
+                  size={48}
+                />
                 <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                   PropertyPro
                 </Typography>

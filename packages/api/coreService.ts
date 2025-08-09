@@ -93,6 +93,10 @@ class CoreService {
     localStorage.removeItem(REFRESH_TOKEN_KEY);
   }
 
+  public hasTokens(): boolean {
+    return !!localStorage.getItem(ACCESS_TOKEN_KEY) || !!localStorage.getItem(REFRESH_TOKEN_KEY);
+  }
+
   async get<T extends object>(
     url: string,
     config?: AxiosRequestConfig,

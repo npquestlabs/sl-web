@@ -1,7 +1,7 @@
 import { Box, CircularProgress, useTheme } from '@mui/material';
 import { coreService } from '@repo/api/coreService';
 import { useEffect } from 'react';
-import { Outlet, redirect, useNavigate } from 'react-router';
+import { Outlet, redirect, useLoaderData, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { Header } from '~/components/header';
 import { useAuthStore } from '~/store/auth';
@@ -38,7 +38,7 @@ export function HydrateFallback() {
 export default function DashboardLayout() {
   const navigate = useNavigate();
   const theme = useTheme();
-  //const user = useLoaderData<typeof clientLoader>();
+  const user = useLoaderData<typeof clientLoader>();
 
   useEffect(() => {
     coreService.intercept401Response(() => {
@@ -52,7 +52,7 @@ export default function DashboardLayout() {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <Header />
+      <Header user={user} />
       <Box
         component="main"
         sx={{

@@ -18,6 +18,7 @@ import {
   ListItemButton,
   ListItemText,
   Divider,
+  useTheme,
 } from '@mui/material';
 
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -25,7 +26,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Home from '@mui/icons-material/Home';
+import AppLogo from '@repo/ui/components/logo'
 
 import { NavLink, useNavigate } from 'react-router';
 import { getCurrentUser, useAuthStore } from '~/store/auth';
@@ -38,10 +39,10 @@ const navigation = [
   { to: '/dashboard/maintenance', label: 'Maintenance' },
 ];
 
-export function Header() {
+export function Header({ user }: { user: ReturnType<typeof getCurrentUser> }) {
   const navigate = useNavigate();
-  const user = getCurrentUser();
   const logout = useAuthStore((state) => state.logout);
+  const theme = useTheme();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -69,7 +70,7 @@ export function Header() {
             }}
           >
             <NavLink to="/">
-              <Home />
+              <AppLogo color1={theme.palette.secondary.main} color2={theme.palette.primary.main} size={48}/>
             </NavLink>
           </Typography>
           <Stack
